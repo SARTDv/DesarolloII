@@ -11,7 +11,7 @@ function Login() {
         e.preventDefault();
         setError(null);
         try {
-            const response = await axios.post('http://localhost:8000/api/accounts/login/', {
+            const response = await axios.post('http://localhost:8000/api/accounts/login/', { //Quiero cambiar esto
                 username,
                 password,
             });
