@@ -14,6 +14,12 @@
   background-size: cover;
 }
 
+.captcha-container {
+  padding-top: 40px; 
+  justify-content: center; 
+  align-items: center; 
+  transform: translateX(25px);  }
+
 .container {
   width: 100%;
   padding-top: 60px;
@@ -125,7 +131,7 @@
 	font-weight: 300;
   padding-left: 37px;
   padding-right: 37px;
-  padding-top: 55px;
+  padding-top: 15px;
   transition: opacity .5s ease, transform .5s ease;
 }
 
@@ -149,7 +155,7 @@
   padding-right: 37px;
   padding-top: 55px;
   position: relative;
-  top: -220px;
+  top: -350px;
   left: 0px;
   opacity: 1;
   transition: all .5s ease;
