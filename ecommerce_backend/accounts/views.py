@@ -13,9 +13,11 @@ from django.conf import settings
 
 class RegisterView(APIView):
     def post(self, request):
+         
         captcha_response = request.data.get('g-recaptcha-response')
-        if not captcha_response:
+        if not captcha_response:           # antes de captcha va un not lo quite para pruebas 
            return Response({'error': 'Captcha no completado'}, status=status.HTTP_400_BAD_REQUEST)
+        
         # Verifica el CAPTCHA con el servicio de Google
         captcha_secret = settings.RECAPTCHA_PRIVATE_KEY
         payload = {
@@ -30,7 +32,10 @@ class RegisterView(APIView):
 
         # Si el CAPTCHA no es válido, devuelve un error
         if not result.get('success'):
+ 
             return Response({'error': 'Captcha inválido'}, status=status.HTTP_400_BAD_REQUEST)
+        
+
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
