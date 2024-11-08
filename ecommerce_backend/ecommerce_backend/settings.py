@@ -131,3 +131,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
 CORS_ALLOW_ALL_ORIGINS = True #REVISAR, responde de todos los origenes
+
+
+RECAPTCHA_PUBLIC_KEY = '6LduhHgqAAAAAG6SwTg1Beu_vrBcBnf1Opozllu8'
+RECAPTCHA_PRIVATE_KEY = '6LduhHgqAAAAAPbjNj9V-SzsbrGhJ-ym8kmg-kl-'

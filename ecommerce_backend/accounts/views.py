@@ -1,3 +1,4 @@
+import requests
 from django.shortcuts import render
 
 # Create your views here.
@@ -7,9 +8,29 @@ from rest_framework.views import APIView
 from .serializers import UserSerializer
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
+from django.conf import settings
+
 
 class RegisterView(APIView):
     def post(self, request):
+        captcha_response = request.data.get('g-recaptcha-response')
+        if not captcha_response:
+           return Response({'error': 'Captcha no completado'}, status=status.HTTP_400_BAD_REQUEST)
+        # Verifica el CAPTCHA con el servicio de Google
+        captcha_secret = settings.RECAPTCHA_PRIVATE_KEY
+        payload = {
+            'secret': captcha_secret,
+            'response': captcha_response
+        }
+
+        # Hacer la solicitud POST al servidor de Google reCAPTCHA
+        captcha_verify_url = 'https://www.google.com/recaptcha/api/siteverify'
+        response = requests.post(captcha_verify_url, data=payload)
+        result = response.json()
+
+        # Si el CAPTCHA no es válido, devuelve un error
+        if not result.get('success'):
+            return Response({'error': 'Captcha inválido'}, status=status.HTTP_400_BAD_REQUEST)
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
