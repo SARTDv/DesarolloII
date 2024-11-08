@@ -1,5 +1,4 @@
 import React from 'react';
-import '../css/core-style.css'
 
 const StrideFooter = () => {
 

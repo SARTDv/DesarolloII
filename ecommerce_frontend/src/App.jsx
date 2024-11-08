@@ -16,6 +16,10 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
+                <Route path="/strideLogin" element={<StrideLogin />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+
                 <Route path="/" element={<StrideLayout />}>
                     <Route index element={<Navigate to="/home" />} />
                     <Route path="/home" element={<Home />} />
@@ -23,10 +27,7 @@ function App() {
                     <Route path="/checkout" element={<Checkout />} />
                     <Route path="/shop" element={<Shop />} />
                     <Route path="/productDetails" element={<ProductDetails />} />
-                </Route>
-                <Route path="/strideLogin" element={<StrideLogin />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
+                </Route>                
                 </Routes>  
         </BrowserRouter>
     );

@@ -1,5 +1,4 @@
 import React from 'react';
-import '../css/core-style.css'
 
 const Checkout = () => {
 
@@ -91,7 +90,7 @@ const Checkout = () => {
                             </div>
 
                             <div className="cart-btn mt-100">
-                                <a href="#" className="btn amado-btn w-100">Checkout</a>
+                                <a href="#" className="btn amado-btn w-100">Pay</a>
                             </div>
                         </div>
                     </div>
