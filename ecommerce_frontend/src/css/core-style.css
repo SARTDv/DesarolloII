@@ -19,53 +19,35 @@
   font-style: normal; }
 /* :: 2.0 Import All CSS */
 /* :: 3.0 Base CSS */
-* {
-  margin: 0;
-  padding: 0; }
 
-body {
+
+.realMainContent { 
   font-family: "helveticaneuemedium";
-  font-size: 16px; }
+  font-size: 16px;
+}
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: #242424;
-  line-height: 1.3;
-  font-weight: 400; }
+  .realMainContent h1, h2, h3, h4, h5, h6 {
+    color: #242424;
+    line-height: 1.3;
+    font-weight: 400; }
 
-p {
+.realMainContent p {
   color: #6d6d6d;
   font-size: 16px;
   line-height: 1.9;
   font-weight: 400; }
 
-a {
-  -webkit-transition: all 500ms ease 0s;
-  transition: all 500ms ease 0s;
-  text-decoration: none;
-  outline: 0 solid transparent;
-  color: #131212;
-  font-weight: 400;
-  font-size: 12px; }
-  a:hover, a:focus {
-    -webkit-transition: all 500ms ease 0s;
-    transition: all 500ms ease 0s;
-    text-decoration: none;
-    outline: 0 solid transparent;
-    color: #131212;
-    font-weight: 400;
-    font-size: 12px; }
 
-ul,
-ol {
-  margin: 0; }
-  ul li,
-  ol li {
-    list-style: none; }
+
+  .realMainContent ul,
+  .realMainContent ol {
+    margin: 0;
+  }
+  
+  .realMainContent ul li,
+  .realMainContent ol li {
+    list-style: none;
+  }
 
 img {
   height: auto;
@@ -451,6 +433,7 @@ img {
       display: block; }
     .main-content-wrapper .header-area .amado-nav li a {
       font-size: 14px;
+      left: -40px;
       text-transform: uppercase;
       position: relative;
       z-index: 1;
