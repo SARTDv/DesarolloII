@@ -6,6 +6,7 @@ import styles from '../css/strideLogin.module.css';
 function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [email,setEmail] = useState('');
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
     const [captchaValue, setCaptchaValue] = useState(null);
@@ -19,19 +20,21 @@ function Login() {
         e.preventDefault();
         setError(null);
         if (!captchaValue) {
-            setErrorMessage('Por favor, complete el CAPTCHA');
+            alert("por favor complete el captcha")
             return;
           }
           const data = {
             username,
             password,
             'g-recaptcha-response': captchaValue,
+            email,
           };
 
         try {
             const response = await axios.post('http://localhost:8000/api/accounts/register/', data);
             setSuccess(true);
             console.log("Usuario registrado:", response.data);
+            alert("Registro exitoso");
         } catch (error) {
             setError("Hubo un error al registrar el usuario");
             console.error("Error en el registro:", error);
@@ -43,7 +46,7 @@ function Login() {
         e.preventDefault();
         setError(null);
         if (!captchaValue) {
-            setErrorMessage('Por favor, complete el CAPTCHA');
+            alert("por favor complete el capthca")
             return;
           }
         try {
@@ -127,7 +130,13 @@ function Login() {
                             required
                         />
                         <label for="email">Email</label>
-                        <input className={styles["form-styling"]} type="text" name="email" placeholder=""/>
+                        <input className={styles["form-styling"]}  name="email" 
+                            type="text"
+                            value = {email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="example@example.com"
+                            required
+                        />
                         <label for="password">Password</label>
                         <input className={styles["form-styling"]}
                             type="password"
