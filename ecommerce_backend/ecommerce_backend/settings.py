@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'accounts', 
     'corsheaders',
     'products',
-    'orders'
+    'orders',
+    'cartItem'
     
 ]
 
