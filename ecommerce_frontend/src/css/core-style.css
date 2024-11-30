@@ -923,30 +923,28 @@ img {
 .search-wrapper-on .main-content-wrapper {
   margin-top: 110px; }
 
-.single-products-catagory {
-  position: relative;
-  z-index: 1;
-  width: 33.33333%;
-  top: 0; }
-  @media only screen and (min-width: 992px) and (max-width: 1199px) {
-    .single-products-catagory {
-      width: 50%; } }
-  @media only screen and (min-width: 768px) and (max-width: 991px) {
-    .single-products-catagory {
-      width: 100%; } }
-  @media only screen and (max-width: 767px) {
-    .single-products-catagory {
-      width: 100%; } }
-  @media only screen and (min-width: 576px) and (max-width: 767px) {
-    .single-products-catagory {
-      width: 50%; } }
-  .single-products-catagory a {
+  .masonry-layout {
+    column-gap: 0px; /* Espacio entre columnas */
+  }
+  
+  .masonry-item {
+    break-inside: avoid; /* Evita que los elementos se rompan entre columnas */
+    margin-bottom: 0px; /* Espacio entre filas */
+  }
+  
+  .masonry-item img {
+    width: 100%; /* Asegura que las imágenes se ajusten al ancho del contenedor */
+    display: block;
+  }
+  
+
+  .masonry-item a {
     display: block;
     width: 100%;
     height: 100%;
     position: relative;
     z-index: 10; }
-    .single-products-catagory a::after {
+    .masonry-item a::after {
       -webkit-transition-duration: 250ms;
       transition-duration: 250ms;
       position: absolute;
@@ -959,41 +957,41 @@ img {
       z-index: 1;
       opacity: 0;
       visibility: visible; }
-    .single-products-catagory a img {
-      width: 100%; }
-  .single-products-catagory .hover-content {
-    position: absolute;
-    top: 40px;
-    left: 40px;
-    z-index: 10; }
-    @media only screen and (max-width: 767px) {
-      .single-products-catagory .hover-content {
-        top: 30px;
-        left: 30px; } }
-    .single-products-catagory .hover-content .line {
-      width: 80px;
-      height: 3px;
-      background-color: #0e5a9b;
-      display: block;
-      margin-bottom: 15px; }
-    .single-products-catagory .hover-content p {
-      font-size: 16px;
-      color: #6d6d6d;
-      line-height: 1;
-      margin-bottom: 5px;
-      -webkit-transition-duration: 250ms;
-      transition-duration: 250ms; }
-    .single-products-catagory .hover-content h4 {
-      margin-bottom: 0;
-      -webkit-transition-duration: 250ms;
-      transition-duration: 250ms; }
-  .single-products-catagory:hover a::after, .single-products-catagory:focus a::after {
-    opacity: 1;
-    visibility: visible; }
-  .single-products-catagory:hover .hover-content p,
-  .single-products-catagory:hover .hover-content h4, .single-products-catagory:focus .hover-content p,
-  .single-products-catagory:focus .hover-content h4 {
-    color: #fff; }
+
+
+      .masonry-item .hover-content {
+        position: absolute;
+        top: 40px;
+        left: 40px;
+        z-index: 10; }
+        @media only screen and (max-width: 767px) {
+          .masonry-item .hover-content {
+            top: 30px;
+            left: 30px; } }
+        .masonry-item .hover-content .line {
+          width: 80px;
+          height: 3px;
+          background-color: #0e5a9b;
+          display: block;
+          margin-bottom: 15px; }
+        .masonry-item .hover-content p {
+          font-size: 16px;
+          color: #6d6d6d;
+          line-height: 1;
+          margin-bottom: 5px;
+          -webkit-transition-duration: 250ms;
+          transition-duration: 250ms; }
+        .masonry-item .hover-content h4 {
+          margin-bottom: 0;
+          -webkit-transition-duration: 250ms;
+          transition-duration: 250ms; }
+      .masonry-item:hover a::after, .masonry-item:focus a::after {
+        opacity: 1;
+        visibility: visible; }
+      .masonry-item:hover .hover-content p,
+      .masonry-item:hover .hover-content h4, .masonry-item:focus .hover-content p,
+      .masonry-item:focus .hover-content h4 {
+        color: #fff; }
 
 /* :: 6.0 Newsletter Area CSS */
 .newsletter-area {
