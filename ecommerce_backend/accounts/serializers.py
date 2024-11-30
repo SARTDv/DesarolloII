@@ -3,6 +3,7 @@
 import re
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
+from rest_framework.serializers import Serializer, CharField
 from rest_framework.authtoken.models import Token
 from rest_framework.validators import UniqueValidator
 
@@ -45,3 +46,6 @@ class UserSerializer(serializers.ModelSerializer):
         Token.objects.create(user=user)
         return user
 
+class LoginSerializer(Serializer):
+    username = CharField(required=True)
+    password = CharField(required=True, write_only=True)
