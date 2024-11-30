@@ -36,7 +36,7 @@ const Home = () => {
         <div className="catagory clearfix">
             <div className="masonry-layout" style={{ columnCount: columns }}>
                 {images.map((image, index) => (
-                    <div className="masonry-item clearfix"  key={index}>
+                    <div className="single-products-catagory clearfix"  key={index}>
                         <a href="/shop">
                             <img src={image.src} alt={image.alt} />
                             <div className="hover-content">
