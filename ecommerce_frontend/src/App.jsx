@@ -5,6 +5,7 @@ import Login from './pages/login';
 import axios from 'axios';
 
 import StrideLayout from './components/StrideLayout';
+import Search from "./pages/search"; 
 import Home from './pages/home'
 import Cart from './pages/cart'
 import Checkout from './pages/checkout'
@@ -39,6 +40,7 @@ function App() {
                 <Route path="/" element={<StrideLayout />}>
                     <Route index element={<Navigate to="/home" />} />
                     <Route path="/home" element={<Home />} />
+                    <Route path="/search" element={<Search />} />
                     <Route path="/cart" element={<Cart />} />
                     <Route path="/checkout" element={<Checkout />} />
                     <Route path="/shop" element={<Shop />} />
