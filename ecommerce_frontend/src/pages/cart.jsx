@@ -1,6 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const Cart = () => {
+
+    const [cartItems, setCartItems] = useState([]);
+
+    useEffect(() => {
+        const fetchCartItems = async () => {
+            const token_key = localStorage.getItem('token');
+
+            try {
+                const response = await axios.post('http://127.0.0.1:8000/api/cart/Showcart/', 
+                    { token_key: token_key }
+                );
+                setCartItems(response.data);
+            } catch (error) {
+                console.error('Error fetching cart items:', error);
+            }
+        };
+
+        fetchCartItems();
+    }, []);
+
+    const totalSum = cartItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
 
   return (
     <div className="cart-table-area section-padding-100">
@@ -22,81 +44,27 @@ const Cart = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td className="cart_product_img">
-                                            <a href="#"><img src="img/bg-img/cart1.jpg" alt="Product"/></a>
-                                        </td>
-                                        <td className="cart_product_desc">
-                                            <h5>White Modern Chair</h5>
-                                        </td>
-                                        <td className="price">
-                                            <span>$130</span>
-                                        </td>
-                                        <td className="qty">
-                                            <div className="qty-btn d-flex">
-                                                <p>Qty</p>
-                                                <div className="quantity">
-                                                    <span className="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = parseInt(effect.value); if( !isNaN( qty ) && qty > 1 ) effect.value = qty - 1; return false;">
-                                                        <i className="fa fa-caret-down" aria-hidden="true"></i>
-                                                    </span>
-                                                    <input type="number" className="qty-text" id="qty" step="1" min="1" max="300" name="quantity" value="1"/>
-                                                    <span className="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = parseInt(effect.value); if( !isNaN( qty )) effect.value = qty + 1; return false;">
-                                                        <i className="fa fa-caret-up" aria-hidden="true"></i>
-                                                    </span>
+                                    {cartItems.map(item => (
+                                        <tr key={item.id}>
+                                            <td className="cart_product_img">
+                                                <a href="#"><img src={item.product.imageurl} alt="Product"/></a>
+                                            </td>
+                                            <td className="cart_product_desc">
+                                                <h5>{item.product.name}</h5>
+                                            </td>
+                                            <td className="price">
+                                                <span>${item.product.price}</span>
+                                            </td>
+                                            <td className="qty">
+                                                <div className="qty-btn d-flex">
+                                                    <p>Qty</p>
+                                                    <div className="quantity">
+                                                        <input type="number" className="qty-text" value={item.quantity} readOnly/>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className="cart_product_img">
-                                            <a href="#"><img src="img/bg-img/cart2.jpg" alt="Product"/></a>
-                                        </td>
-                                        <td className="cart_product_desc">
-                                            <h5>Minimal Plant Pot</h5>
-                                        </td>
-                                        <td className="price">
-                                            <span>$10</span>
-                                        </td>
-                                        <td className="qty">
-                                            <div className="qty-btn d-flex">
-                                                <p>Qty</p>
-                                                <div className="quantity">
-                                                    <span className="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = parseInt(effect.value); if( !isNaN( qty ) && qty > 1 ) effect.value = qty - 1; return false;">
-                                                        <i className="fa fa-caret-down" aria-hidden="true"></i>
-                                                    </span>
-                                                    <input type="number" className="qty-text" id="qty" step="1" min="1" max="300" name="quantity" value="1"/>
-                                                    <span className="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = parseInt(effect.value); if( !isNaN( qty )) effect.value = qty + 1; return false;">
-                                                        <i className="fa fa-caret-up" aria-hidden="true"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td className="cart_product_img">
-                                            <a href="#"><img src="img/bg-img/cart3.jpg" alt="Product"/></a>
-                                        </td>
-                                        <td className="cart_product_desc">
-                                            <h5>Minimal Plant Pot</h5>
-                                        </td>
-                                        <td className="price">
-                                            <span>$10</span>
-                                        </td>
-                                        <td className="qty">
-                                            <div className="qty-btn d-flex">
-                                                <p>Qty</p>
-                                                <div className="quantity">
-                                                    <span className="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = parseInt(effect.value); if( !isNaN( qty ) && qty > 1 ) effect.value = qty - 1; return false;">
-                                                        <i className="fa fa-caret-down" aria-hidden="true"></i>
-                                                    </span>
-                                                    <input type="number" className="qty-text" id="qty" step="1" min="1" max="300" name="quantity" value="1"/>
-                                                    <span className="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = parseInt(effect.value); if( !isNaN( qty )) effect.value = qty + 1; return false;">
-                                                        <i className="fa fa-caret-up" aria-hidden="true"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                            </td>
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
                         </div>
@@ -105,9 +73,9 @@ const Cart = () => {
                         <div className="cart-summary">
                             <h5>Cart Total</h5>
                             <ul className="summary-table">
-                                <li><span>subtotal:</span> <span>$140.00</span></li>
+                                <li><span>subtotal:</span> <span>${totalSum}</span></li>
                                 <li><span>delivery:</span> <span>Free</span></li>
-                                <li><span>total:</span> <span>$140.00</span></li>
+                                <li><span>total:</span> <span>${totalSum}</span></li>
                             </ul>
                             <div className="cart-btn mt-100">
                                 <a href="/checkout" className="btn amado-btn w-100">Checkout</a>

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import ReCAPTCHA from "react-google-recaptcha";
 import styles from '../css/strideLogin.module.css';
+import { useNavigate } from "react-router-dom";
+
 
 function Login() {
     const [username, setUsername] = useState('');
@@ -10,6 +12,7 @@ function Login() {
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
     const [captchaValue, setCaptchaValue] = useState(null);
+    const navigate = useNavigate();
 
     const handleCaptchaChange = (value) => {
         setCaptchaValue(value);
@@ -34,7 +37,7 @@ function Login() {
             const response = await axios.post('http://localhost:8000/api/accounts/register/', data);
             setSuccess(true);
             console.log("Usuario registrado:", response.data);
-            alert("Registro exitoso");
+            alert("Registro exitos, ya pudes iniciar sesion");
         } catch (error) {
             setError("Hubo un error al registrar el usuario");
             console.error("Error en el registro:", error);
@@ -57,6 +60,8 @@ function Login() {
             const token = response.data.token;
             localStorage.setItem('token', token); // Guardar el token en el almacenamiento local
             alert("Inicio de sesión exitoso");
+            navigate("/home");
+
             //-----------setActiveButton("log");
         } catch (error) {
             setError("Credenciales inválidas");
@@ -93,7 +98,7 @@ function Login() {
                 </div>
                 <div> 
                     <form className={activeLink === "signin" ? styles["form-signin"] : styles["form-signin-left"]}  action="" method="post" name="form">
-                        <label for="username">Username</label>
+                        <label htmlFor="username">Username</label>
                         <input className={styles["form-styling"]}
                             type="text"
                             value={username}
@@ -101,7 +106,7 @@ function Login() {
                             placeholder=""
                             required
                         />
-                        <label for="password">Password</label>
+                        <label htmlFor="password">Password</label>
                         <input className={styles["form-styling"]}
                             type="password"
                             value={password}
@@ -121,7 +126,7 @@ function Login() {
                     </form>
                 
                     <form className={formSignUp} action="" method="post" name="form">
-                        <label for="fullname">Username</label>
+                        <label htmlFor="fullname">Username</label>
                         <input className={styles["form-styling"]}
                             type="text"
                             value={username}
@@ -129,15 +134,15 @@ function Login() {
                             placeholder=""
                             required
                         />
-                        <label for="email">Email</label>
+                        <label htmlFor="email">Email</label>
                         <input className={styles["form-styling"]}  name="email" 
                             type="text"
                             value = {email}
                             onChange={(e) => setEmail(e.target.value)}
-                            placeholder="example@example.com"
+                            placeholder=""
                             required
                         />
-                        <label for="password">Password</label>
+                        <label htmlFor="password">Password</label>
                         <input className={styles["form-styling"]}
                             type="password"
                             value={password}
@@ -179,7 +184,7 @@ function Login() {
                     <div className={activeButton === "log" ? styles["cover-photo-down"] : styles["cover-photo"]}></div>
                     <div className={activeButton === "log" ? styles["profile-photo-down"] : styles["profile-photo"]}></div>
                     <h1 className={activeButton === "log" ? styles["welcome-left"] : styles["welcome"]}>Welcome, CDOBLETA</h1>
-                    <a className={activeButton === "log" ? styles["btn-goback-up"] : styles["btn-goback"]} value="Refresh" onClick="history.go()">Go back</a>
+                    <a className={activeButton === "log" ? styles["btn-goback-up"] : styles["btn-goback"]} value="Refresh">Go back</a>
                 </div>
             </div>
         </div>

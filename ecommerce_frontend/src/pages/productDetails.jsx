@@ -1,7 +1,26 @@
 import React from 'react';
+import axios from 'axios';
 
 const ProductDetails = () => {
+  const handleAddToCart = async () => {
 
+    const token = localStorage.getItem('token');
+    
+    if (!token) {
+        alert('Por favor, inicia sesión para añadir productos al carrito.');
+        return;
+    }
+    
+    try {
+        const response = await axios.post('http://127.0.0.1:8000/api/cart/addToCart/', 
+                { token_key: token , product_id : 1}
+            );
+        alert('Producto añadido al carrito');
+    } catch (error) {
+        console.error('Error al añadir al carrito:', error);
+        alert('Hubo un error al añadir el producto al carrito');
+    }
+};
   return (
     <div className="single-product-area section-padding-100 clearfix">
   <div className="container-fluid">
@@ -103,7 +122,7 @@ const ProductDetails = () => {
                 </span>
               </div>
             </div>
-            <button type="submit" name="addtocart" value="5" className="btn amado-btn">Add to cart</button>
+            <button onClick={handleAddToCart}  type="button" className="btn amado-btn">Add to cart</button>
           </form>
         </div>
       </div>
