@@ -1,0 +1,106 @@
+/* search.css */
+.search-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    gap: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
+  }
+  
+  .search-container h1 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .search-container input {
+    width: 100%; /* Ocupa todo el ancho disponible */
+    padding: 12px 20px; /* Más espacio para el texto */
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Asegura que el padding no se salga del ancho total */
+    margin-bottom: 10px; /* Espacio entre los campos */
+  }
+  
+  .search-container input:focus {
+    outline: none;
+    border-color: #007bff; /* Cambio de color cuando el campo está en foco */
+  }
+  
+  .search-container button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .search-container button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+  }
+  
+  .search-container button:hover:not(:disabled) {
+    background-color: #0056b3;
+  }
+  
+  .error-message {
+    color: red;
+    font-weight: bold;
+  }
+  
+  .results {
+    width: 100%;
+  }
+  
+  .results h2 {
+    font-size: 1.5rem;
+    color: #555;
+  }
+  
+  .results ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .results li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .results li strong {
+    color: #007bff;
+  }
+  
+  /* Adaptación a pantallas más pequeñas */
+  @media (max-width: 768px) {
+    .search-container {
+      padding: 10px;
+      gap: 15px;
+    }
+  
+    .search-container h1 {
+      font-size: 1.5rem;
+    }
+  
+    .search-container input,
+    .search-container button {
+      font-size: 0.9rem;
+    }
+  
+    .results h2 {
+      font-size: 1.2rem;
+    }
+  }
+  

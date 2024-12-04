@@ -4,12 +4,14 @@ import Register from './pages/register';
 import axios from 'axios';
 
 import StrideLayout from './components/StrideLayout';
-import Home from './pages/home';
-import Cart from './pages/cart';
-import Checkout from './pages/checkout';
-import Shop from './pages/shop';
-import ProductDetails from './pages/productDetails';
-import StrideLogin from './pages/strideLogin';
+import Search from "./pages/search"; 
+import Home from './pages/home'
+import Cart from './pages/cart'
+import Checkout from './pages/checkout'
+import Shop from './pages/shop'
+import ProductDetails from './pages/productDetails'
+import StrideLogin from './pages/strideLogin'
+
 
 import ProtectedRoute from './components/RutaLogeada'; // Importa el componente de rutas protegidas
 
@@ -38,6 +40,7 @@ function App() {
                 <Route path="/" element={<StrideLayout />}>
                     <Route index element={<Navigate to="/home" />} />
                     <Route path="/home" element={<Home />} />
+                    <Route path="/search" element={<Search />} />
                     <Route path="/shop" element={<Shop />} />
                     <Route path="/productDetails" element={<ProductDetails />} />
                     
