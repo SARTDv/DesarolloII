@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import ReCAPTCHA from "react-google-recaptcha";
 import styles from '../css/strideLogin.module.css';
+import { useNavigate } from "react-router-dom";
+
 
 function Login() {
     const [username, setUsername] = useState('');
@@ -10,6 +12,7 @@ function Login() {
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
     const [captchaValue, setCaptchaValue] = useState(null);
+    const navigate = useNavigate();
 
     const handleCaptchaChange = (value) => {
         setCaptchaValue(value);
@@ -34,7 +37,7 @@ function Login() {
             const response = await axios.post('http://localhost:8000/api/accounts/register/', data);
             setSuccess(true);
             console.log("Usuario registrado:", response.data);
-            alert("Registro exitoso");
+            alert("Registro exitos, ya pudes iniciar sesion");
         } catch (error) {
             setError("Hubo un error al registrar el usuario");
             console.error("Error en el registro:", error);
@@ -57,6 +60,8 @@ function Login() {
             const token = response.data.token;
             localStorage.setItem('token', token); // Guardar el token en el almacenamiento local
             alert("Inicio de sesión exitoso");
+            navigate("/home");
+
             //-----------setActiveButton("log");
         } catch (error) {
             setError("Credenciales inválidas");
