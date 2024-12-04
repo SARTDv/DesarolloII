@@ -1,6 +1,26 @@
 import React from 'react';
-
+import axios from 'axios';
 const Shop = () => {
+
+    const handleAddToCart = async () => {
+
+        const token = localStorage.getItem('token');
+        
+        if (!token) {
+            alert('Por favor, inicia sesión para añadir productos al carrito.');
+            return;
+        }
+        
+        try {
+            const response = await axios.post('http://127.0.0.1:8000/api/cart/addToCart/', 
+                    { token_key: token , product_id : 1}
+                );
+            alert('Producto añadido al carrito');
+        } catch (error) {
+            console.error('Error al añadir al carrito:', error);
+            alert('Hubo un error al añadir el producto al carrito');
+        }
+    };
 
   return (
     <>
@@ -31,23 +51,23 @@ const Shop = () => {
     <div className="widget-desc">
         <div className="form-check">
             <input className="form-check-input" type="checkbox" value="" id="amado" />
-            <label className="form-check-label" for="amado">Amado</label>
+            <label className="form-check-label" htmlFor="amado">Amado</label>
         </div>
         <div className="form-check">
             <input className="form-check-input" type="checkbox" value="" id="ikea" />
-            <label className="form-check-label" for="ikea">Ikea</label>
+            <label className="form-check-label" htmlFor="ikea">Ikea</label>
         </div>
         <div className="form-check">
             <input className="form-check-input" type="checkbox" value="" id="furniture" />
-            <label className="form-check-label" for="furniture">Furniture Inc</label>
+            <label className="form-check-label" htmlFor="furniture">Furniture Inc</label>
         </div>
         <div className="form-check">
             <input className="form-check-input" type="checkbox" value="" id="factory" />
-            <label className="form-check-label" for="factory">The factory</label>
+            <label className="form-check-label" htmlFor="factory">The factory</label>
         </div>
         <div className="form-check">
             <input className="form-check-input" type="checkbox" value="" id="artdeco" />
-            <label className="form-check-label" for="artdeco">Artdeco</label>
+            <label className="form-check-label" htmlFor="artdeco">Artdeco</label>
         </div>
     </div>
 </div>
@@ -76,8 +96,8 @@ const Shop = () => {
         <div className="slider-range">
             <div data-min="10" data-max="1000" data-unit="$" className="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" data-value-min="10" data-value-max="1000" data-label-result="">
                 <div className="ui-slider-range ui-widget-header ui-corner-all"></div>
-                <span className="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
-                <span className="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
+                <span className="ui-slider-handle ui-state-default ui-corner-all" tabIndex="0"></span>
+                <span className="ui-slider-handle ui-state-default ui-corner-all" tabIndex="0"></span>
             </div>
             <div className="range-price">$10 - $1000</div>
         </div>
@@ -171,7 +191,7 @@ const Shop = () => {
                           <div className="line"></div>
                           <p className="product-price">$180</p>
                           <a href="/productDetails">
-                              <h6>Modern Chair</h6>
+                              <h6>Este es</h6>
                           </a>
                       </div>
                       <div className="ratings-cart text-right">
@@ -183,7 +203,7 @@ const Shop = () => {
                               <i className="fa fa-star" aria-hidden="true"></i>
                           </div>
                           <div className="cart">
-                              <a href="/cart" data-toggle="tooltip" data-placement="left" title="Add to Cart"><img src="img/core-img/cart.png" alt=""/></a>
+                              <a onClick={handleAddToCart} data-toggle="tooltip" data-placement="left" title="Add to Cart"><img src="img/core-img/cart.png" alt=""/></a>
                           </div>
                       </div>
                   </div>

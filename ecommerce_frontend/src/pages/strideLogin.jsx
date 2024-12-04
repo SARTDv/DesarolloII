@@ -93,7 +93,7 @@ function Login() {
                 </div>
                 <div> 
                     <form className={activeLink === "signin" ? styles["form-signin"] : styles["form-signin-left"]}  action="" method="post" name="form">
-                        <label for="username">Username</label>
+                        <label htmlFor="username">Username</label>
                         <input className={styles["form-styling"]}
                             type="text"
                             value={username}
@@ -101,7 +101,7 @@ function Login() {
                             placeholder=""
                             required
                         />
-                        <label for="password">Password</label>
+                        <label htmlFor="password">Password</label>
                         <input className={styles["form-styling"]}
                             type="password"
                             value={password}
@@ -121,7 +121,7 @@ function Login() {
                     </form>
                 
                     <form className={formSignUp} action="" method="post" name="form">
-                        <label for="fullname">Username</label>
+                        <label htmlFor="fullname">Username</label>
                         <input className={styles["form-styling"]}
                             type="text"
                             value={username}
@@ -129,15 +129,15 @@ function Login() {
                             placeholder=""
                             required
                         />
-                        <label for="email">Email</label>
+                        <label htmlFor="email">Email</label>
                         <input className={styles["form-styling"]}  name="email" 
                             type="text"
                             value = {email}
                             onChange={(e) => setEmail(e.target.value)}
-                            placeholder="example@example.com"
+                            placeholder=""
                             required
                         />
-                        <label for="password">Password</label>
+                        <label htmlFor="password">Password</label>
                         <input className={styles["form-styling"]}
                             type="password"
                             value={password}
@@ -179,7 +179,7 @@ function Login() {
                     <div className={activeButton === "log" ? styles["cover-photo-down"] : styles["cover-photo"]}></div>
                     <div className={activeButton === "log" ? styles["profile-photo-down"] : styles["profile-photo"]}></div>
                     <h1 className={activeButton === "log" ? styles["welcome-left"] : styles["welcome"]}>Welcome, CDOBLETA</h1>
-                    <a className={activeButton === "log" ? styles["btn-goback-up"] : styles["btn-goback"]} value="Refresh" onClick="history.go()">Go back</a>
+                    <a className={activeButton === "log" ? styles["btn-goback-up"] : styles["btn-goback"]} value="Refresh">Go back</a>
                 </div>
             </div>
         </div>
