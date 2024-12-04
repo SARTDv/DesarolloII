@@ -35,7 +35,7 @@ class CartView(APIView):
                     'product': {
                         'name': item.product.name,
                         'price': item.product.price,
-                        'imageurl': None,
+                        'imageurl': item.product.imageurl,
                     },
                     'quantity': item.quantity,
                 }
