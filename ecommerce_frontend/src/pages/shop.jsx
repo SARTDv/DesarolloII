@@ -143,7 +143,7 @@ const Shop = () => {
                       </div>
                   </div>
               </div>
-          </div>
+          </div>    
       </div>
 
       <div className="row">
