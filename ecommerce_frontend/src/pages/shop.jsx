@@ -152,7 +152,7 @@ const Shop = () => {
               <div className="single-product-wrapper">
                   <div className="product-img">
                       <img src="img/product-img/product1.jpg" alt=""/>
-                      <img className="hover-img" src="img/product-img/product2.jpg" alt=""/>
+                      <img className="hover-img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRNLsy6Whgk1qDAtSKEzolKC2VtRNAeOqqg6g&s=" alt=""/>
                   </div>
 
                   <div className="product-description d-flex align-items-center justify-content-between">
