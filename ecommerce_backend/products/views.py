@@ -3,29 +3,37 @@ from rest_framework.response import Response
 from django.db.models import Q
 from .models import Product
 from rest_framework import status
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-
-# View para obtener los productos por busqueda 
+    
 class SearchView(APIView):
     def get(self, request):
         # Obtener los parámetros de consulta
         category = request.query_params.get('category', None)
+        if (category == "Ninguna"):
+            category = None
         keyword = request.query_params.get('keyword', None)
-
-        # Consulta base
+        page = request.query_params.get('page', 1)
+        page_size = request.query_params.get('page_size', 8)  # Por defecto 8 productos por página
+        # Crear consulta base
         products = Product.objects.all()
-
-        # Filtrar por categoría si se proporciona
+        # Filtro por categoría (si existe)
         if category:
             products = products.filter(category__icontains=category)
-
-        # Filtrar por palabra clave si se proporciona
+        # Filtro por palabra clave en nombre o descripción
         if keyword:
             products = products.filter(
                 Q(name__icontains=keyword) | Q(description__icontains=keyword)
             )
-
-        # Serializar los resultados
+        # Configuración de la paginación
+        paginator = Paginator(products, page_size)
+        try:
+            products_page = paginator.page(page)
+        except PageNotAnInteger:
+            return Response({"error": "Invalid page number, must be an integer."}, status=400)
+        except EmptyPage:
+            return Response({"error": "Page number out of range."}, status=404)
+        # Serialización de productos
         results = [
             {
                 "id": product.id,
@@ -36,10 +44,15 @@ class SearchView(APIView):
                 "stock": product.stock,
                 "imageurl": product.imageurl,
             }
-            for product in products
+            for product in products_page
         ]
-
-        return Response({"products": results})
+        # Respuesta con datos de paginación
+        return Response({
+            "products": results,
+            "total_pages": paginator.num_pages,
+            "current_page": int(page),
+            "total_products": paginator.count,
+        })
 
 # viem para obtner los detalles de un producto 
 class ProductDetailView(APIView):

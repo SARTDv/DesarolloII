@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from "react-router-dom";
 
 const StrideHeader = () => {
    /*
     Esto es temporal hasta que se desarrolle la pagina de account
   */
-
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
@@ -18,11 +17,12 @@ const StrideHeader = () => {
         localStorage.removeItem('token');
         setIsLoggedIn(false); // Actualiza el estado a "no logueado"
         alert("Sesión cerrada correctamente");
-    };
-
+    };    
 
   return (
     <>
+    
+
     <div className="mobile-nav">
       <div className="amado-navbar-brand">
         <a href="/home">
