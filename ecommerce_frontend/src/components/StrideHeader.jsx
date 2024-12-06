@@ -65,7 +65,7 @@ const StrideHeader = () => {
           {isLoggedIn && (
                 <>
                     <a href="/cart" className="cart-nav">
-                        <img src="img/core-img/cart.png" alt="Cart" /> Cart <span>(0)</span>
+                        <img src="img/core-img/cart.png" alt="Cart" /> Cart 
                     </a>
                     <a href="#" className="fav-nav">
                         <img src="img/core-img/favorites.png" alt="Favourite" /> Favourite
