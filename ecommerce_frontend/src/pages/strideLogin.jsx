@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import ReCAPTCHA from "react-google-recaptcha";
 import styles from '../css/strideLogin.module.css';
 import { useNavigate } from "react-router-dom";
-
+import { AuthContext } from '../components/AuthToken';
 
 function Login() {
+    const { isLoggedIn, setIsLoggedIn  } = useContext(AuthContext);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email,setEmail] = useState('');
@@ -14,10 +15,17 @@ function Login() {
     const [captchaValue, setCaptchaValue] = useState(null);
     const navigate = useNavigate();
 
+    useEffect(() => {
+        if (isLoggedIn) {
+            alert("Ya has iniciado sesión.");
+            navigate("/home");
+        }
+    }, [isLoggedIn, navigate]);
+
     const handleCaptchaChange = (value) => {
         setCaptchaValue(value);
       };
-
+    
     const handleRegister = async (e) => {
 
         e.preventDefault();
@@ -60,6 +68,7 @@ function Login() {
             const token = response.data.token;
             localStorage.setItem('token', token); // Guardar el token en el almacenamiento local
             alert("Inicio de sesión exitoso");
+            setIsLoggedIn(true);
             navigate("/home");
 
             //-----------setActiveButton("log");

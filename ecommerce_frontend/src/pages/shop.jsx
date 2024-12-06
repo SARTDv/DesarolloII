@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Slider from 'react-slider';
 
 const Shop = () => {
     
@@ -12,6 +13,11 @@ const Shop = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
+    //Slider
+    const MIN = 10;
+    const MAX = 1000;
+    const [values, setValues] = useState([MIN,MAX])
+    
     // Función para obtener productos al cargar la página
     const fetchProducts = async (page = 1) => {
         try {
@@ -41,7 +47,7 @@ const Shop = () => {
         setError(null);
         try {
             const response = await fetch(
-                `http://127.0.0.1:8000/api/products/search/?category=${activeCategory}&keyword=${palabra}`
+                `http://127.0.0.1:8000/api/products/search/?category=${activeCategory}&keyword=${palabra}&min_price=${values[0]}&max_price=${values[1]}`
             );
             if (!response.ok) {
                 throw new Error("Error al realizar la búsqueda");
@@ -65,7 +71,7 @@ const Shop = () => {
         setError(null);
         try {
             const response = await fetch(
-                `http://127.0.0.1:8000/api/products/search/?category=${category}&keyword=${keyword}`
+                `http://127.0.0.1:8000/api/products/search/?category=${category}&keyword=${keyword}&min_price=${values[0]}&max_price=${values[1]}`
             );
             if (!response.ok) {
                 throw new Error("Error al realizar la búsqueda");
@@ -168,12 +174,13 @@ const Shop = () => {
 
                 <div className="widget-desc">
                     <div className="slider-range">
-                        <div data-min="10" data-max="1000" data-unit="$" className="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" data-value-min="10" data-value-max="1000" data-label-result="">
-                            <div className="ui-slider-range ui-widget-header ui-corner-all"></div>
-                            <span className="ui-slider-handle ui-state-default ui-corner-all" tabIndex="0"></span>
-                            <span className="ui-slider-handle ui-state-default ui-corner-all" tabIndex="0"></span>
-                        </div>
-                        <div className="range-price">$10 - $1000</div>
+                        <Slider className={"slider"}
+                                onChange={setValues}
+                                value={values}
+                                min={MIN}
+                                max={MAX}
+                        />
+                        <div className="range-price">${values[0]} - ${values[1]}</div>
                     </div>
                 </div>
             </div>

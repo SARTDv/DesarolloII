@@ -1,6 +1,5 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Register from './pages/register';
+import React, { useContext } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import axios from 'axios';
 
 import StrideLayout from './components/StrideLayout';
@@ -11,7 +10,7 @@ import Checkout from './pages/checkout'
 import Shop from './pages/shop'
 import ProductDetails from './pages/productDetails'
 import StrideLogin from './pages/strideLogin'
-import Test from './pages/Test'
+import { AuthProvider, AuthContext } from './components/AuthToken';
 
 import ProtectedRoute from './components/RutaLogeada'; // Importa el componente de rutas protegidas
 
@@ -29,22 +28,19 @@ axios.interceptors.request.use(
     }
 );
 
-function App() {
-    return (
-        <BrowserRouter>
-            <Routes>
-                {/* Rutas públicas */}
-                <Route path="/login" element={<StrideLogin />} />
-                <Route path="/register" element={<Register />} />
+const AppContent = () => {
+    const { isLoggedIn } = useContext(AuthContext); 
 
+    return (
+        <Router>
+            <Routes>
+                <Route path="/login" element={<StrideLogin />} />
                 <Route path="/" element={<StrideLayout />}>
                     <Route index element={<Navigate to="/home" />} />
-                    <Route path="/home" element={<Home />} />
+                    <Route path="/home" element={<Home key={isLoggedIn} />} /> 
                     <Route path="/search" element={<Search />} />
                     <Route path="/shop" element={<Shop />} />
                     <Route path="/productDetails" element={<ProductDetails />} />
-                    <Route path = "/Test" element={<Test />} />
-                    {/* Rutas protegidas */}
                     <Route
                         path="/cart"
                         element={
@@ -63,8 +59,14 @@ function App() {
                     />
                 </Route>
             </Routes>
-        </BrowserRouter>
+        </Router>
     );
-}
+};
+
+const App = () => (
+    <AuthProvider>
+        <AppContent />
+    </AuthProvider>
+);
 
 export default App;

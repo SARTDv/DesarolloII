@@ -1211,25 +1211,33 @@ img {
     background-color: #c7d2d8 !important;
     height: 2px;
     border: none; }
-  .widget.price .ui-slider-handle {
-    background-color: #fff;
-    top: -7px;
-    width: 18px;
-    height: 18px;
-    margin: 0;
-    border: 2px solid #0e5a9b;
-    border-radius: 50%; }
-  .widget.price .ui-slider-range.ui-corner-all.ui-widget-header {
-    background-color: #0e5a9b; }
-  .widget.price .ui-slider-horizontal {
-    height: 2px;
-    background-color: #0e5a9b; }
+
+    .widget.price .slider {
+      background-color: #c7d2d8 !important;
+      width: 100%;
+      height: 2px;
+      border: none; 
+      }
+
+    .slider .thumb {
+        top: -8px;
+        width: 18px;
+        height: 18px;
+        cursor: grab;
+        border-radius: 50%;
+        border: 2px solid #0e5a9b;
+        background-color: #fff;}
+    .track-1 {
+      height: 2px;
+      background-color: #0e5a9b;
+    }    
   .widget.price .range-price {
     font-size: 16px;
     font-weight: 400;
     margin-top: 20px;
     text-transform: uppercase;
     color: #959595; }
+
   .widget.color .widget-desc ul {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap; }

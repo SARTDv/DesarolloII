@@ -63,8 +63,8 @@ const ProductDetails = () => {
           <div className="col-12">
             <nav aria-label="breadcrumb">
               <ol className="breadcrumb mt-50">
-                <li className="breadcrumb-item"><a href="#">Home</a></li>
-                <li className="breadcrumb-item"><a href="#">Furniture</a></li>
+                <li className="breadcrumb-item"><a href="/shop">Shop</a></li>
+                <li className="breadcrumb-item"><a>{product.category}</a></li>
                 <li className="breadcrumb-item active" aria-current="page">{product.name}</li>
               </ol>
             </nav>

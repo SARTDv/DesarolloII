@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react'
+import { AuthContext } from './AuthToken';
 
 const StrideFooter = () => {
-
+    const { isLoggedIn } = useContext(AuthContext);
   return (
     <footer className="footer_area clearfix mt-15">
         <div className="container">
@@ -30,15 +31,16 @@ const StrideFooter = () => {
                                         <li className="nav-item">
                                             <a className="nav-link" href="/shop">Shop</a>
                                         </li>
-                                        <li className="nav-item">
-                                            <a className="nav-link" href="/productDetails">Product</a>
-                                        </li>
-                                        <li className="nav-item">
-                                            <a className="nav-link" href="/cart">Cart</a>
-                                        </li>
-                                        <li className="nav-item">
-                                            <a className="nav-link" href="/checkout">Checkout</a>
-                                        </li>
+                                        {isLoggedIn && (
+                                            <>
+                                            <li className="nav-item">
+                                                <a className="nav-link" href="/cart">Cart</a>
+                                            </li>
+                                            <li className="nav-item">
+                                                <a className="nav-link" href="/checkout">Checkout</a>
+                                            </li>
+                                            </>
+                                        )}
                                     </ul>
                                 </div>
                             </nav>
