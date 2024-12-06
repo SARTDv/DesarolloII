@@ -11,7 +11,7 @@ import Checkout from './pages/checkout'
 import Shop from './pages/shop'
 import ProductDetails from './pages/productDetails'
 import StrideLogin from './pages/strideLogin'
-
+import Test from './pages/Test'
 
 import ProtectedRoute from './components/RutaLogeada'; // Importa el componente de rutas protegidas
 
@@ -43,7 +43,7 @@ function App() {
                     <Route path="/search" element={<Search />} />
                     <Route path="/shop" element={<Shop />} />
                     <Route path="/productDetails" element={<ProductDetails />} />
-                    
+                    <Route path = "/Test" element={<Test />} />
                     {/* Rutas protegidas */}
                     <Route
                         path="/cart"
