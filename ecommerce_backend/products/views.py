@@ -15,6 +15,10 @@ class SearchView(APIView):
         keyword = request.query_params.get('keyword', None)
         page = request.query_params.get('page', 1)
         page_size = request.query_params.get('page_size', 8)  # Por defecto 8 productos por página
+        min_price = request.query_params.get('min_price', None)
+        max_price = request.query_params.get('max_price', None)
+        
+
         # Crear consulta base
         products = Product.objects.all()
         # Filtro por categoría (si existe)
@@ -25,6 +29,10 @@ class SearchView(APIView):
             products = products.filter(
                 Q(name__icontains=keyword) | Q(description__icontains=keyword)
             )
+        if min_price:
+            if (min_price != 10 and max_price != 1000):
+                products = products.filter(price__gte=min_price)
+                products = products.filter(price__lte=max_price)
         # Configuración de la paginación
         paginator = Paginator(products, page_size)
         try:
