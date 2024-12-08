@@ -1,5 +1,5 @@
 # accounts/serializers.py
-# accounts/serializers.py
+
 import re
 from django.contrib.auth import get_user_model
 from rest_framework import serializers

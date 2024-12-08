@@ -55,29 +55,39 @@ function Login() {
     };
 
     const handleLogin = async (e) => {
-
         e.preventDefault();
         setError(null);
+    
+        // Verifica si el CAPTCHA ha sido completado
         if (!captchaValue) {
-            alert("por favor complete el capthca")
+            toast.error('Please do CAPTCHA', { autoClose: true });
             return;
-          }
+        }
+    
+        // Crea los datos que se enviarán en la solicitud
+        const data = {
+            username,
+            password,
+            'g-recaptcha-response': captchaValue, // Agrega el valor del CAPTCHA
+        };
+    
         try {
-            const response = await axios.post('http://localhost:8000/api/accounts/login/', { //Quiero cambiar esto
-                username,
-                password,
-            });
+            // Realiza la solicitud POST al backend para el login
+            const response = await axios.post('http://localhost:8000/api/accounts/login/', data);
             const token = response.data.token;
-            localStorage.setItem('token', token); // Guardar el token en el almacenamiento local
-            toast.success('Succesfully Logued!', { autoClose: true });
-            setIsLoggedIn(true);
-            navigate("/home");
-
-            //-----------setActiveButton("log");
+            
+            // Guarda el token en el almacenamiento local
+            localStorage.setItem('token', token); 
+            toast.success('¡Login exitoso!', { autoClose: true });
+            setIsLoggedIn(true); // Cambia el estado de autenticación
+            navigate("/home"); // Redirige al usuario al inicio
+    
         } catch (error) {
-            toast.error('Wrong username or password!', { autoClose: true });
+            toast.error('¡Usuario o contraseña incorrectos!', { autoClose: true });
+            console.error("Error en el login:", error);
         }
     };
+    
 
     // Define el estado
     const [activeLink, setActiveLink] = useState("signup");

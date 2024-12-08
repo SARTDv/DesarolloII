@@ -13,22 +13,13 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 class CartView(APIView):
-    #permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        token_key = request.data.get('token_key')
-        
-        if not token_key:
-            return Response({'error': 'Token is required'}, status=400)
+        user = request.user
+        try:
+            cart_items = CartItem.objects.filter(user=user)
 
-        try:
-            token = Token.objects.get(key=token_key)
-            user_id = token.user.id 
-        except Token.DoesNotExist:
-            return Response({'error': 'Invalid token'}, status=401)
-        try:
-            cart_items = CartItem.objects.filter(user_id=user_id)
-            print(cart_items)
             serialized_data = [
                 {
                     'id': item.id,
@@ -48,22 +39,18 @@ class CartView(APIView):
             return Response({'error': 'Error fetching cart items'}, status=500)
 
 class AddToCartView(APIView):
-    #permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        token_key = request.data.get('token_key')
-        try:
-            token = Token.objects.get(key=token_key)
-            user_id = Token.objects.get(key=token).user
-        except Token.DoesNotExist:
-            return Response({'error': 'Invalid token'}, status=401)
-        
+
+        user = request.user
+
         product_id = request.data.get('product_id')
         quantity = request.data.get('quantity', 1)
         try:
             product = Product.objects.get(id=product_id)
             cart_item, created = CartItem.objects.get_or_create(
-                user=user_id, 
+                user=user, 
                 product=product,
                 defaults={'quantity': quantity}
             )
@@ -78,16 +65,13 @@ class RemoveFromCartView(APIView):
     #permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        token_key = request.data.get('token_key')
         product_id = request.data.get('product_id')
-        token = Token.objects.get(key=token_key)
-        user_id = token.user.id 
+        user = request.user
 
         try:
             # Eliminar el producto del carrito del usuario
-            cart_item = CartItem.objects.get(user=user_id, product_id=product_id)
+            cart_item = CartItem.objects.get(user=user, product_id=product_id)
             cart_item.delete()
             return Response({"success": True})
         except CartItem.DoesNotExist:
             return Response({"success": False, "message": "Item not found in cart"})
-        

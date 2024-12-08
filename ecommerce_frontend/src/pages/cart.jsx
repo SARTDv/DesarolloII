@@ -24,11 +24,11 @@ const Cart = () => {
     }, []);
 
     const Remove = async (productId) => {
-        const token_key = localStorage.getItem('token');
+        //const token_key = localStorage.getItem('token');
     
         try {
             const response = await axios.post('http://127.0.0.1:8000/api/cart/Remove/', {
-                token_key: token_key,
+                //token_key: token_key,
                 product_id: productId,
             });
     

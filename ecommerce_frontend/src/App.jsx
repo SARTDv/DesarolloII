@@ -11,6 +11,7 @@ import Checkout from './pages/checkout'
 import Shop from './pages/shop'
 import ProductDetails from './pages/productDetails'
 import StrideLogin from './pages/strideLogin'
+import TestOrderCreation from './pages/newtest';
 import { AuthProvider, AuthContext } from './components/AuthToken';
 
 import ProtectedRoute from './components/RutaLogeada'; // Importa el componente de rutas protegidas
@@ -18,7 +19,9 @@ import ProtectedRoute from './components/RutaLogeada'; // Importa el componente 
 // Interceptor para agregar el token en los encabezados de todas las solicitudes
 axios.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem('authToken'); // Obtener el token del almacenamiento local
+        const token = localStorage.getItem('token'); // Obtener el token del almacenamiento local
+        console.log("SI SE ESTA MANDANDO EL TOKEN ")           //                                 SOLO PARA VERIFICAR
+        console.log('Token:', token);
         if (token) {
             config.headers.Authorization = `Token ${token}`; // Agregar el token al encabezado de la solicitud
         }
@@ -42,6 +45,7 @@ const AppContent = () => {
                     <Route path="/search" element={<Search />} />
                     <Route path="/shop" element={<Shop />} />
                     <Route path="/productDetails" element={<ProductDetails />} />
+                    <Route path="/test-order" element={<TestOrderCreation />} />
                     <Route
                         path="/cart"
                         element={
