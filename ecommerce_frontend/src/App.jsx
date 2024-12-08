@@ -20,8 +20,6 @@ import ProtectedRoute from './components/RutaLogeada'; // Importa el componente 
 axios.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem('token'); // Obtener el token del almacenamiento local
-        console.log("SI SE ESTA MANDANDO EL TOKEN ")           //                                 SOLO PARA VERIFICAR
-        console.log('Token:', token);
         if (token) {
             config.headers.Authorization = `Token ${token}`; // Agregar el token al encabezado de la solicitud
         }

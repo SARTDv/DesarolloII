@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
-
+    const navigate = useNavigate();
     const [cartItems, setCartItems] = useState([]);
-
     useEffect(() => {
         const fetchCartItems = async () => {
             const token_key = localStorage.getItem('token');
@@ -24,11 +24,9 @@ const Cart = () => {
     }, []);
 
     const Remove = async (productId) => {
-        //const token_key = localStorage.getItem('token');
     
         try {
             const response = await axios.post('http://127.0.0.1:8000/api/cart/Remove/', {
-                //token_key: token_key,
                 product_id: productId,
             });
     
@@ -43,6 +41,32 @@ const Cart = () => {
             console.error("Error during remove request:", error);
         }
     };
+
+    const handleCreateOrder = async () => {
+        try {
+            // Verificar si hay órdenes pendientes
+            const checkResponse = await axios.get(
+                "http://127.0.0.1:8000/api/orders/check-pending/"
+            );
+    
+            if (checkResponse.data.has_pending) {
+                toast.warning("order pending payment. Complete or cancel your order before creating a new one.");
+                return; // Salir si hay una orden pendiente
+            }
+    
+            // Crear una nueva orden
+            const createResponse = await axios.post(
+                "http://127.0.0.1:8000/api/orders/create/"
+            );
+    
+            toast.success("Orden creada exitosamente: " + createResponse.data.message);
+            navigate("/checkout");
+        } catch (error) {
+            console.error("Error creando la orden:", error.response ? error.response.data : error);
+            toast.error("Error creando la orden: " + (error.response ? error.response.data : error.message));
+        }
+    };
+
     const totalSum = cartItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
 
   return (
@@ -119,7 +143,12 @@ const Cart = () => {
                                 <li><span>total:</span> <span>${totalSum}</span></li>
                             </ul>
                             <div className="cart-btn mt-100">
-                                <a href="/checkout" className="btn amado-btn w-100">Checkout</a>
+                                <button 
+                                    className="btn amado-btn w-100" 
+                                    onClick={handleCreateOrder}
+                                >
+                                    Checkout
+                                </button>
                             </div>
                         </div>
                     </div>

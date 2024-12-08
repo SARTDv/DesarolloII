@@ -4,9 +4,12 @@ from django.db.models import Q
 from .models import Product
 from rest_framework import status
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from rest_framework.permissions import IsAuthenticated,AllowAny
 
     
 class SearchView(APIView):
+
+    permission_classes = [AllowAny]                                   # no se si dejar esto asi 
     def get(self, request):
         # Obtener los parámetros de consulta
         category = request.query_params.get('category', None)
@@ -64,6 +67,8 @@ class SearchView(APIView):
 
 # viem para obtner los detalles de un producto 
 class ProductDetailView(APIView):
+    permission_classes = [IsAuthenticated]  
+
     def get(self, request, product_id):
         try:
             # Recuperar el producto por ID
