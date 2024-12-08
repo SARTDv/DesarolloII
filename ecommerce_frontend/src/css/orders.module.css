@@ -1,13 +1,46 @@
   .orders-container {
+    flex: 0 0 calc(100% - 320px);
     position: relative;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     line-height: 1.5;
     min-height: 100vh;
     background-color: white;
   }
+
+  .right-divs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;    
+  }
+
+  .orders-container {
+    flex: 0 0 calc(100% - 320px);
+    position: relative;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.5;
+    min-height: 100vh;
+    background-color: white;
+  }
+    @media only screen and (min-width: 768px) and (max-width: 991px) {
+      .orders-container {
+        flex: 0 0 calc(100% - 280px);
+        position: relative;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        line-height: 1.5;
+        min-height: 100vh;
+        background-color: white;
+         } }
+    @media only screen and (max-width: 767px) {
+      .orders-container {
+        flex: 0 0 100%;
+        position: relative;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        line-height: 1.5;
+        min-height: 100vh;
+        background-color: white;
+        }}
   
   .orders-content {
-    max-width: 100%;
     padding: 2rem 1rem;
   }
   
@@ -83,7 +116,17 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+  }
+
+  .order-id {
+    padding-left: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
     margin-bottom: 1rem;
+    font-size: 0.800rem;
+    color: #4b5563;
   }
   
   .order-date, .order-status {
@@ -113,6 +156,10 @@
   
   .status-value.delivered {
     color: #059669;
+  }
+
+  .status-value.canceled {
+    color: #a42727;
   }
   
   .order-actions {
@@ -145,16 +192,44 @@
     transition: background-color 0.2s;
     order: 2;
   }
+
+  .mark-canceled-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background-color: #ffffff;
+    color: #a42727;
+    padding: 0.5rem 1.5rem;
+    border: 2px solid #a42727;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    order: 2;
+  }
   
   .mark-received-btn:hover {
     background-color: #0d4f8a;
   }
+
+  .mark-canceled-btn:hover {
+    background-color: #a42727;
+    color: #ffffff;
+  }
   
-  @media (min-width: 768px) {
+  @media (min-width: 1084px) {
     .order-card {
       padding: 1.5rem;
     }
-  
+
+    .right-divs {
+      flex-direction: row;
+      gap: 0.4rem;
+    }
+
     .order-content {
       flex-direction: row;
       align-items: center;
@@ -177,6 +252,11 @@
       flex-direction: row;
       align-items: center;
     }
+
+    .order-id {
+      flex-direction: row;
+      align-items: right;
+    }
   
     .order-date, .order-status {
       justify-content: flex-start;
@@ -193,6 +273,9 @@
   
     .mark-received-btn {
       width: auto;
-      order: 1;
+    }
+
+    .mark-canceled-btn {
+      width: auto;
     }
   }

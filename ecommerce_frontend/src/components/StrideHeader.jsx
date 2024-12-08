@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from './AuthToken';
+import { PackageOpen } from 'lucide-react';
 
 const StrideHeader = () => {
   const { isLoggedIn,handleLogout } = useContext(AuthContext);
@@ -59,11 +60,14 @@ const StrideHeader = () => {
                     <a href="/cart" className="cart-nav">
                         <img src="img/core-img/cart.png" alt="Cart" /> Cart 
                     </a>
+                    <a href="/MyOrders" className="Acc-nav">
+                    <img src="img/core-img/package-open.png" alt="My Orders" /> My Orders
+                    </a>
                     <a href="#" className="fav-nav">
                         <img src="img/core-img/favorites.png" alt="Favourite" /> Favourite
                     </a>
                     <a href="#" className="Acc-nav" onClick={logoutAndRedirect}>
-                        <img src="img/core-img/account.png" alt="Account" /> Logout
+                        <img src="img/core-img/account.png" alt="Logout" /> Logout
                     </a>
                 </>
           )}

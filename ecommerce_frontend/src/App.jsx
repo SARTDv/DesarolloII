@@ -38,7 +38,6 @@ const AppContent = () => {
                 <Route path="/" element={<StrideLayout />}>
                     <Route index element={<Navigate to="/home" />} />
                     <Route path="/home" element={<Home key={isLoggedIn} />} /> 
-                    <Route path="/orders" element={<OrderPage />} />
                     <Route path="/shop" element={<Shop />} />
                     <Route path="/productDetails" element={<ProductDetails />} />
                     <Route
@@ -54,6 +53,14 @@ const AppContent = () => {
                         element={
                             <ProtectedRoute>
                                 <Checkout />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/MyOrders"
+                        element={
+                            <ProtectedRoute>
+                                <OrderPage />
                             </ProtectedRoute>
                         }
                     />
