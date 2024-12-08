@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Slider from 'react-slider';
+import { toast, ToastContainer } from 'react-toastify';
 
 const Shop = () => {
     
@@ -97,7 +98,7 @@ const Shop = () => {
             const response = await axios.post('http://127.0.0.1:8000/api/cart/addToCart/', 
                 { token_key: token, product_id: Id }
             );
-            alert('Producto añadido al carrito');
+            toast.success('Succesfully added!', { autoClose: true });
         } catch (error) {
             console.error('Error al añadir al carrito:', error);
             alert('Hubo un error al añadir el producto al carrito');
@@ -125,7 +126,12 @@ const Shop = () => {
 
 
   return (
-    <> 
+    <>
+        <div>
+            {/* Alertas de las mas alta calidddddaa */}
+            <ToastContainer position="top-center" autoClose={3000} hideProgressBar={true} />
+        </div>
+
         <div className="shop_sidebar_area">
         <div className="widget catagory mb-50">
             <h6 className="widget-title mb-30">Catagories</h6>

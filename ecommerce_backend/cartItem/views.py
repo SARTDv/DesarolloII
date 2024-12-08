@@ -33,6 +33,7 @@ class CartView(APIView):
                 {
                     'id': item.id,
                     'product': {
+                        'id' : item.product.id,
                         'name': item.product.name,
                         'price': item.product.price,
                         'imageurl': item.product.imageurl,
@@ -72,3 +73,21 @@ class AddToCartView(APIView):
             return Response({'message': 'Product added to cart'}, status=status.HTTP_200_OK)
         except Product.DoesNotExist:
             return Response({'error': 'Product not found'}, status=status.HTTP_404_NOT_FOUND)
+
+class RemoveFromCartView(APIView):
+    #permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        token_key = request.data.get('token_key')
+        product_id = request.data.get('product_id')
+        token = Token.objects.get(key=token_key)
+        user_id = token.user.id 
+
+        try:
+            # Eliminar el producto del carrito del usuario
+            cart_item = CartItem.objects.get(user=user_id, product_id=product_id)
+            cart_item.delete()
+            return Response({"success": True})
+        except CartItem.DoesNotExist:
+            return Response({"success": False, "message": "Item not found in cart"})
+        

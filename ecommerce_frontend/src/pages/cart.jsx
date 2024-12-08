@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
 
 const Cart = () => {
 
@@ -22,10 +23,31 @@ const Cart = () => {
         fetchCartItems();
     }, []);
 
+    const Remove = async (productId) => {
+        const token_key = localStorage.getItem('token');
+    
+        try {
+            const response = await axios.post('http://127.0.0.1:8000/api/cart/Remove/', {
+                token_key: token_key,
+                product_id: productId,
+            });
+    
+            if (response.data.success) {
+                setCartItems(prevItems => prevItems.filter(item => item.product.id !== productId));
+                toast.success('Succesfully Removed!', { autoClose: true });
+            } else {
+                toast.error("Error deleting !",{autoclose:true})
+                console.error("Error removing item from cart:", response.data.message);
+            }
+        } catch (error) {
+            console.error("Error during remove request:", error);
+        }
+    };
     const totalSum = cartItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
 
   return (
     <div className="cart-table-area section-padding-100">
+        
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-12 col-lg-8">
@@ -56,11 +78,30 @@ const Cart = () => {
                                                 <span>${item.product.price}</span>
                                             </td>
                                             <td className="qty">
-                                                <div className="qty-btn d-flex">
-                                                    <p>Qty</p>
-                                                    <div className="quantity">
-                                                        <input type="number" className="qty-text" value={item.quantity} readOnly/>
-                                                    </div>
+                                            <div className="qty-btn d-flex align-items-center">
+                                                <p>Qty</p>
+                                                <div className="quantity">
+                                                    <input
+                                                    type="number"
+                                                    className="qty-text"
+                                                    value={item.quantity}
+                                                    readOnly
+                                                    />
+                                                </div>
+
+                                                <div className="cart ms-3">
+                                                    <a
+                                                    data-toggle="tooltip"
+                                                    data-placement="left"
+                                                    title="Remove all"
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        Remove(item.product.id); // Llama a la función remove pasando el id del producto
+                                                      }}
+                                                    >
+                                                    <img src="img/core-img/papelera.png" alt="Remove " />
+                                                    </a>
+                                                </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -84,6 +125,11 @@ const Cart = () => {
                     </div>
                 </div>
             </div>
+            <div>
+            {/* Alertas de las mas alta calidddddaa */}
+            <ToastContainer position="top-center" autoClose={3000} hideProgressBar={true} />
+            </div>
+
         </div>
   );
 };

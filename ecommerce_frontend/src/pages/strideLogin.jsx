@@ -4,6 +4,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import styles from '../css/strideLogin.module.css';
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../components/AuthToken';
+import { toast, ToastContainer } from 'react-toastify';
 
 function Login() {
     const { isLoggedIn, setIsLoggedIn  } = useContext(AuthContext);
@@ -31,7 +32,7 @@ function Login() {
         e.preventDefault();
         setError(null);
         if (!captchaValue) {
-            alert("por favor complete el captcha")
+            toast.error('Please do Captcha!', { autoClose: true });
             return;
           }
           const data = {
@@ -45,9 +46,10 @@ function Login() {
             const response = await axios.post('http://localhost:8000/api/accounts/register/', data);
             setSuccess(true);
             console.log("Usuario registrado:", response.data);
-            alert("Registro exitos, ya pudes iniciar sesion");
+            toast.success('Succesfully Registered!', { autoClose: true });
         } catch (error) {
             setError("Hubo un error al registrar el usuario");
+            toast.error('register issue!', { autoClose: true });
             console.error("Error en el registro:", error);
         }
     };
@@ -67,13 +69,13 @@ function Login() {
             });
             const token = response.data.token;
             localStorage.setItem('token', token); // Guardar el token en el almacenamiento local
-            alert("Inicio de sesión exitoso");
+            toast.success('Succesfully Logued!', { autoClose: true });
             setIsLoggedIn(true);
             navigate("/home");
 
             //-----------setActiveButton("log");
         } catch (error) {
-            setError("Credenciales inválidas");
+            toast.error('Wrong username or password!', { autoClose: true });
         }
     };
 
@@ -93,6 +95,10 @@ function Login() {
 
     return (
         <div className={styles.divlogin}>
+            <div>
+                {/* Alertas de las mas alta calidddddaa */}
+                <ToastContainer position="top-center" autoClose={3000} hideProgressBar={true} />
+            </div>
         <div className={styles.container}>
             <div className={frameClass}>
                 <div className={activeButton === "reg" ? styles["nav-up"] : styles["nav"]}>
@@ -197,6 +203,7 @@ function Login() {
                 </div>
             </div>
         </div>
+
     </div>
     );
 }

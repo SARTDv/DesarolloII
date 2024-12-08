@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
 
 const ProductDetails = () => {
   const [product, setProduct] = useState(null);
@@ -41,7 +42,7 @@ const ProductDetails = () => {
         product_id: focusp,
         quantity: quantity,
       });
-      alert('Producto añadido al carrito');
+      toast.success('Succesfully added!', { autoClose: true });
     } catch (error) {
       console.error('Error al añadir al carrito:', error);
       alert('Hubo un error al añadir el producto al carrito');
@@ -57,7 +58,12 @@ const ProductDetails = () => {
   }
 
   return (
+    
     <div className="single-product-area section-padding-100 clearfix">
+        <div>
+            {/* Alertas de las mas alta calidddddaa */}
+            <ToastContainer position="top-center" autoClose={3000} hideProgressBar={true} />
+        </div>
       <div className="container-fluid">
         <div className="row">
           <div className="col-12">
