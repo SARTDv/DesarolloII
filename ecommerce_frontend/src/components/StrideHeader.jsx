@@ -1,6 +1,7 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from './AuthToken';
+import { PackageOpen } from 'lucide-react';
 
 const StrideHeader = () => {
   const { isLoggedIn,handleLogout } = useContext(AuthContext);
@@ -10,9 +11,10 @@ const StrideHeader = () => {
     navigate('/home'); // Navegación controlada dentro del árbol de Router
   };
   
+  const [ options, setOptions ] = useState(false);
+  
   return (
-    <>   
-
+    <>
     <div className="mobile-nav">
       <div className="amado-navbar-brand">
         <a href="/home">
@@ -20,12 +22,12 @@ const StrideHeader = () => {
         </a>
         </div>
           {/* Navbar Toggler CORREGIR*/}
-        <div className="amado-navbar-toggler">
+          <div className="amado-navbar-toggler" onClick={() => setOptions(!options)}>
           <span></span><span></span><span></span>
         </div>
       </div>
-    <header className="header-area clearfix">
-        <div className="nav-close">
+      <header className={`header-area clearfix ${options ? 'bp-xs-on' : ''}`}>
+      <div className="nav-close" onClick={() => setOptions(false)}>
           <i className="fa fa-close" aria-hidden="true"></i>
         </div>
         {/* Logo */}
@@ -46,7 +48,6 @@ const StrideHeader = () => {
           <ul>
             <li className="active"><a href="/home">Home</a></li>
             <li><a href="/shop">Shop</a></li>
-            <li><a href="/productDetails">Last product</a></li>
             {isLoggedIn && (
                 <li><a href="/checkout">Checkout</a></li>
             )}
@@ -59,11 +60,14 @@ const StrideHeader = () => {
                     <a href="/cart" className="cart-nav">
                         <img src="img/core-img/cart.png" alt="Cart" /> Cart 
                     </a>
+                    <a href="/MyOrders" className="Acc-nav">
+                    <img src="img/core-img/package-open.png" alt="My Orders" /> My Orders
+                    </a>
                     <a href="#" className="fav-nav">
                         <img src="img/core-img/favorites.png" alt="Favourite" /> Favourite
                     </a>
                     <a href="#" className="Acc-nav" onClick={logoutAndRedirect}>
-                        <img src="img/core-img/account.png" alt="Account" /> Logout
+                        <img src="img/core-img/account.png" alt="Logout" /> Logout
                     </a>
                 </>
           )}

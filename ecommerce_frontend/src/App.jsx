@@ -4,13 +4,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 
 import StrideLayout from './components/StrideLayout';
-import Search from "./pages/search"; 
-import Home from './pages/home'
-import Cart from './pages/cart'
-import Checkout from './pages/checkout'
-import Shop from './pages/shop'
-import ProductDetails from './pages/productDetails'
-import StrideLogin from './pages/strideLogin'
+import Home from './pages/home';
+import Cart from './pages/cart';
+import Checkout from './pages/checkout';
+import Shop from './pages/shop';
+import ProductDetails from './pages/productDetails';
+import StrideLogin from './pages/strideLogin';
+import OrderPage from './pages/orders';
 import TestOrderCreation from './pages/newtest';
 import { AuthProvider, AuthContext } from './components/AuthToken';
 
@@ -40,7 +40,6 @@ const AppContent = () => {
                 <Route path="/" element={<StrideLayout />}>
                     <Route index element={<Navigate to="/home" />} />
                     <Route path="/home" element={<Home key={isLoggedIn} />} /> 
-                    <Route path="/search" element={<Search />} />
                     <Route path="/shop" element={<Shop />} />
                     <Route path="/productDetails" element={<ProductDetails />} />
                     <Route path="/test-order" element={<TestOrderCreation />} />
@@ -57,6 +56,14 @@ const AppContent = () => {
                         element={
                             <ProtectedRoute>
                                 <Checkout />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/MyOrders"
+                        element={
+                            <ProtectedRoute>
+                                <OrderPage />
                             </ProtectedRoute>
                         }
                     />

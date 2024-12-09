@@ -21,21 +21,26 @@ const Shop = () => {
     
     // Función para obtener productos al cargar la página
     const fetchProducts = async (page = 1) => {
+        setLoading(true);
+        setError(null); // Resetea el estado de error antes de realizar la solicitud
         try {
-            const response = await axios.get('http://127.0.0.1:8000/api/products/products/', {
-                params: {
-                    activeCategory,
-                    keyword,
-                    page,
-                },
-            });
-            setProducts(response.data.products);
-            setTotalPages(response.data.total_pages); // Asegúrate de que el backend devuelva `total_pages`
+            const response = await fetch(
+                `http://127.0.0.1:8000/api/products/search/?category=${activeCategory}&keyword=${keyword}&min_price=${values[0]}&max_price=${values[1]}&page=${page}`
+            );
+            if (!response.ok) {
+                throw new Error("Error al obtener productos");
+            }
+            const data = await response.json();
+            setProducts(data.products);
+            setTotalPages(data.total_pages);
             setCurrentPage(page);
         } catch (error) {
-            console.error('Error fetching products:', error);
+            setError(error.message);
+            console.error("Error fetching products:", error);
+        } finally {
+            setLoading(false);
         }
-    };
+    };   
 
     
     useEffect(() => {
