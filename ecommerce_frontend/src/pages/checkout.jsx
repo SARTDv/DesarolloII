@@ -14,10 +14,25 @@ const Checkout = () => {
         expiryDate: "",
         cvv: "",
       });
+
+    const [shipInfo, setShipInfo] = useState({
+      firstName: "",
+      lastName: "",
+      address: "",
+      town: "",
+      zipCode: "",
+      phoneNum: "",
+      com: "",
+    });
                                                                     // ajustar la payment infor
       const handleInputChange = (e) => {
         const { name, value } = e.target;
         setPaymentInfo({ ...paymentInfo, [name]: value });
+      };
+
+      const handleShipChange = (e) => {
+        const { name, value } = e.target;
+        setShipInfo({ ...shipInfo, [name]: value });
       };
     
       const handlePayment = async () => {
@@ -75,34 +90,38 @@ const Checkout = () => {
                             <div className="cart-title">
                                 <h2>Checkout</h2>
                             </div>
-                            <h2>Información de pago</h2>
                                 <form>
-                                    <div>
-                                    <label>Número de tarjeta:</label>
-                                    <input
-                                        type="text"
-                                        name="cardNumber"
-                                        value={paymentInfo.cardNumber}
-                                        onChange={handleInputChange}
-                                    />
-                                    </div>
-                                    <div>
-                                    <label>Fecha de expiración:</label>
-                                    <input
-                                        type="text"
-                                        name="expiryDate"
-                                        value={paymentInfo.expiryDate}
-                                        onChange={handleInputChange}
-                                    />
-                                    </div>
-                                    <div>
-                                    <label>CVV:</label>
-                                    <input
-                                        type="text"
-                                        name="cvv"
-                                        value={paymentInfo.cvv}
-                                        onChange={handleInputChange}
-                                    />
+                                    <div class="row">
+                                        <div class="col-12 mb-3">
+                                            <input type="number" class="form-control" name="cardNumber" placeholder="Card Number" value={paymentInfo.cardNumber} onChange={handleInputChange} required/>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <input type="text" class="form-control" placeholder="Expity Date" name="expiryDate" value={paymentInfo.expiryDate} onChange={handleInputChange} required/>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <input type="number" class="form-control" placeholder="CVV" name="cvv" value={paymentInfo.cvv} onChange={handleInputChange} required/>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <input type="text" class="form-control" name="firstName" value={shipInfo.firstName} placeholder="First Name" onChange={handleShipChange} required/>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <input type="text" class="form-control" name="lastName" value={shipInfo.lastName} placeholder="Last Name" onChange={handleShipChange} required/>
+                                        </div>
+                                        <div class="col-12 mb-3">
+                                            <input type="text" class="form-control" name="address" placeholder="Address" value={shipInfo.address} onChange={handleShipChange} required/>
+                                        </div>
+                                        <div class="col-12 mb-3">
+                                            <input type="text" class="form-control" name="town" placeholder="Town" value={shipInfo.town} onChange={handleShipChange} />
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <input type="text" class="form-control" name="zipCode" placeholder="Zip Code" value={shipInfo.zipCode} onChange={handleShipChange} required/>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <input type="number" class="form-control" name="phoneNum" min="0" placeholder="Phone No" value={shipInfo.phoneNum} onChange={handleShipChange}/>
+                                        </div>
+                                        <div class="col-12 mb-3">
+                                            <textarea name="com" value={shipInfo.com} class="form-control w-100" cols="30" rows="10" placeholder="Leave a comment about your order" onChange={handleShipChange}></textarea>
+                                        </div>
                                     </div>
                                 </form>
                         </div>

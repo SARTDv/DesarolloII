@@ -21,7 +21,7 @@ class RegisterView(APIView):
         captcha_response = request.data.get('g-recaptcha-response')
 
         if not captcha_response:           # antes de captcha va un not lo quite para pruebas 
-           return Response({'error': 'Captcha no completado'}, status=status.HTTP_400_BAD_REQUEST)
+           return Response({'error': 'Captcha no completado'}, status=400)
         
         # Verifica el CAPTCHA con el servicio de Google
         captcha_secret = settings.RECAPTCHA_PRIVATE_KEY
@@ -38,11 +38,11 @@ class RegisterView(APIView):
         # Si el CAPTCHA no es válido, devuelve un error
         if not result.get('success'):
 
-            return Response({'error': 'Captcha inválido'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'Captcha inválido'}, status=400)
         
 
         serializer = UserSerializer(data=request.data)
-        print(serializer.is_valid())
+
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

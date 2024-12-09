@@ -30,7 +30,6 @@ function Login() {
     const handleRegister = async (e) => {
 
         e.preventDefault();
-        setError(null);
         if (!captchaValue) {
             toast.error('Please do Captcha!', { autoClose: true });
             return;
