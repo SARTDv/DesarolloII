@@ -42,7 +42,8 @@ class RegisterView(APIView):
         
 
         serializer = UserSerializer(data=request.data)
-
+        # Necesito que muestre si el username es unico, de no ser asi error 29
+        # Igual para el correo electronico y su  unicidad
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

@@ -58,7 +58,7 @@ const Checkout = () => {
 
     
             if (response.data.has_pending) {
-              setPendingOrder(response.data.order); // Guarda la orden en el estado
+              setPendingOrder(response.data.order); // Guarda la orden en el estado imprimir para ver
             } else {
               toast.info("No tienes órdenes pendientes.");
               navigate('/cart'); 
