@@ -45,3 +45,32 @@ class PendingOrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ['id', 'status','total_price']
+
+# Lista las ordenes 
+class OrderListSerializer(serializers.ModelSerializer):
+    FirstProductImageUrl = serializers.SerializerMethodField()
+    packageQty = serializers.SerializerMethodField()
+    Totalprice = serializers.FloatField(source='total_price')
+    orderDate = serializers.DateTimeField(source='created_at')
+
+    class Meta:
+        model = Order
+        fields = ['id', 'FirstProductImageUrl', 'status', 'packageQty', 'Totalprice', 'orderDate']
+
+    def get_FirstProductImageUrl(self, obj):
+        # Obtiene la URL de la imagen del primer producto en la orden
+        first_item = obj.order_items.first()
+        return first_item.product.imageurl if first_item else None
+
+    def get_packageQty(self, obj):
+        # Calcula el total de productos en la orden
+        return sum(item.quantity for item in obj.order_items.all())
+    
+class OrderStatusUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = ['status']  # Solo el campo de estado se puede actualizar
+
+    
+
+
