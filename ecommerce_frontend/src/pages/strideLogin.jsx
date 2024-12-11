@@ -63,10 +63,12 @@ function Login() {
             
 
         try {
+            console.log(data)
             const response = await axios.post('http://localhost:8000/api/accounts/register/', data);
             setSuccess(true);
             console.log("Usuario registrado:", response.data);
-            toast.success('Succesfully Registered!', { autoClose: true });
+            toast.success('Registered successfully! Please verify your email.', { autoClose: true });
+
         } catch (error) {
             setError("Hubo un error al registrar el usuario");
             toast.error('register issue!', { autoClose: true });

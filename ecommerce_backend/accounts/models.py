@@ -8,6 +8,6 @@ from django.db import models
 
 class CustomUser(AbstractUser):
     
-
+    is_email_verified = models.BooleanField(default=False)
     def __str__(self):
         return f" Nombre : {self.username}  correo : {self.email}"

@@ -39,7 +39,7 @@ const Checkout = () => {
     try {
       const response = await axios.post(
         "http://127.0.0.1:8000/api/orders/process-payment/",
-        { ship_info: shipInfo } // Clave ajustada a ship_info
+        { ship_info: shipInfo } 
       );
       toast.success(response.data.message);
     } catch (error) {
