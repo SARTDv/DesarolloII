@@ -33,7 +33,7 @@ const OrderPage = () => {
       // Actualiza el estado local de la orden
       setOrders(
         orders.map((order) =>
-          order.id === orderId ? { ...order, status: 'delivered' } : order
+          order.id === orderId ? { ...order, status: 'completed' } : order
         )
       );
     } catch (err) {

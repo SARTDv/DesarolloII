@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
 from products.models import Product
-
+from shippinfo.models import ShipInfo
 
 class Order(models.Model):
     
@@ -22,6 +22,8 @@ class Order(models.Model):
         default='pending'
     )
     total_price = models.FloatField(default=0)
+    ship_info = models.OneToOneField(ShipInfo, null=True, blank=True, on_delete=models.SET_NULL)  # Relación con ShipInfo
+
     
     def __str__(self):
         return f"Order {self.id} by {self.user.username}"

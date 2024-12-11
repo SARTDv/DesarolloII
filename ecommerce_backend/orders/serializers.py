@@ -41,10 +41,23 @@ class OrderSerializer(serializers.ModelSerializer):
         return order
 
 
+# Serializer para los productos (order_items)
+class OrderItemSerializer(serializers.ModelSerializer):
+    product_name = serializers.CharField(source='product.name')  # Obtener el nombre del producto
+    product_price = serializers.DecimalField(source='product.price', max_digits=10, decimal_places=2)  # Precio del producto
+
+    class Meta:
+        model = OrderItem
+        fields = ['id', 'product_name', 'quantity', 'product_price']  # Campos a mostrar
+
+# Serializer para la orden pendiente
 class PendingOrderSerializer(serializers.ModelSerializer):
+    order_items = OrderItemSerializer(many=True)  # Incluir los elementos de la orden (productos)
+
     class Meta:
         model = Order
-        fields = ['id', 'status','total_price']
+        fields = ['id', 'status', 'total_price', 'order_items']  # Incluir los order_items
+
 
 # Lista las ordenes 
 class OrderListSerializer(serializers.ModelSerializer):

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'products',
     'orders',
     'cartItem',
+    'shippinfo',
     'drf_yasg'
     
 ]

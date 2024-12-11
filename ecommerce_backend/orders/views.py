@@ -4,6 +4,10 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import OrderSerializer,PendingOrderSerializer,OrderListSerializer,OrderStatusUpdateSerializer
 from .models import Order                                       #No se si esto es correcto 
+from django.db import transaction 
+from shippinfo.models import ShipInfo
+from shippinfo.serializers import ShipInfoSerializer
+
 
 #view que crea una orden solo necesita el id del usuario 
 class CreateOrderView(APIView):
@@ -38,7 +42,7 @@ class CheckPendingOrderView(APIView):
             return Response({'has_pending': False}, status=200)
         
 
-#view que se encarga de procesar el pago                transaccional ?
+
 class ProcessPaymentView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -48,26 +52,54 @@ class ProcessPaymentView(APIView):
         # Obtener la orden pendiente
         try:
             order = Order.objects.filter(user=user, status='pending').first()
-
+            if not order:
+                return Response({"error": "No hay órdenes pendientes."}, status=status.HTTP_404_NOT_FOUND)
         except Order.DoesNotExist:
-            return Response({"error": "No hay órdenes pendientes."}, status=status.HTTP_404_NOT_FOUND)
+            return Response({"error": "No se pudo encontrar la orden."}, status=status.HTTP_404_NOT_FOUND)
 
-        payment_info = request.data.get("payment_info")
+        # Extraer la información de envío desde el cuerpo de la solicitud
+        ship_info_data = request.data.get("ship_info", {})
+        payment_info = request.data.get("payment_info", {})
 
-        """
-        Aqui se deberia implementar los pagos 
-        """
+        # Validar y crear ShipInfo
+        serializer = ShipInfoSerializer(data=ship_info_data)
+        if not serializer.is_valid():
+            print("el serializer no es valido ")
+            return Response({"error": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+            
 
-        #verificar que llegan los datos
-        for elemnto in payment_info.values():
-            print(elemnto)
+        # Usar transacciones para garantizar la consistencia
+        with transaction.atomic():
+            # Crear el ShipInfo y asociarlo a la orden
+            ship_info = serializer.save()
+            order.ship_info = ship_info
 
-        # Actualizar estado de la orden
-        order.status = "shipped"
-        order.save()
+            # Verificar stock de productos
+            for item in order.order_items.all():
+                product = item.product
+                if product.stock < item.quantity:
+                    return Response(
+                        {"error": f"No hay suficiente stock para el producto {product.name}."},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+
+            # Aquí debería ir la lógica del pago
+            for elemento in payment_info.values():
+                print(elemento)  # Depuración: Imprimir información del pago
+
+            # Actualizar el stock de los productos
+            for item in order.order_items.all():
+                product = item.product
+                product.stock -= item.quantity
+                product.save()
+
+            # Actualizar el estado de la orden
+            order.status = "shipped"
+            order.save()
 
         return Response({"message": "Pago realizado con éxito.", "order_id": order.id}, status=status.HTTP_200_OK)
-    
+
+# lista las ordenes de un usuario con cierta id 
 class OrderListView(APIView):
     permission_classes = [AllowAny]  #se debe cambiar 
 
@@ -77,6 +109,9 @@ class OrderListView(APIView):
         serializer = OrderListSerializer(orders, many=True)
         return Response(serializer.data)
     
+#
+
+
 
 class OrderUpdateStatusView(APIView):
     def patch(self, request, pk):
