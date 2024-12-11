@@ -743,11 +743,11 @@ img {
         font-size: 18px;
         margin-bottom: 0; }
       .main-content-wrapper .cart-table-area .cart-summary .summary-table {
-        margin-top: 30px; }
+        margin-top: 10px; }
         .main-content-wrapper .cart-table-area .cart-summary .summary-table li {
           display: -webkit-box;
           display: -ms-flexbox;
-          display: flex;
+          display: flex;          
           -webkit-box-pack: justify;
           -ms-flex-pack: justify;
           justify-content: space-between;
@@ -756,6 +756,21 @@ img {
           .main-content-wrapper .cart-table-area .cart-summary .summary-table li span {
             color: #6b6b6b;
             font-size: 14px; }
+        .main-content-wrapper .cart-table-area .cart-summary .product-table {
+          margin-top: 20px; }
+            .main-content-wrapper .cart-table-area .cart-summary .product-table li {
+              display: -webkit-box;
+              display: -ms-flexbox;
+              display: flex;
+              padding-left: 5px;
+              -webkit-box-pack: justify;
+              -ms-flex-pack: justify;
+              justify-content: space-between;
+              margin-bottom: 2px; }
+              .main-content-wrapper .cart-table-area .cart-summary .product-table li span {
+                color: #6b6b6b;
+                font-size: 13px; }
+
       .main-content-wrapper .cart-table-area .cart-summary .payment-method label {
         font-size: 14px;
         color: #6b6b6b;

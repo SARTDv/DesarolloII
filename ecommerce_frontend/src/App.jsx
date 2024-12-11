@@ -13,7 +13,7 @@ import StrideLogin from './pages/strideLogin';
 import OrderPage from './pages/orders';
 import TestOrderCreation from './pages/newtest';
 import { AuthProvider, AuthContext } from './components/AuthToken';
-
+import Admin from './pages/admin/admin'
 import ProtectedRoute from './components/RutaLogeada'; // Importa el componente de rutas protegidas
 
 // Interceptor para agregar el token en los encabezados de todas las solicitudes
@@ -37,6 +37,7 @@ const AppContent = () => {
         <Router>
             <Routes>
                 <Route path="/login" element={<StrideLogin />} />
+                <Route path="/admin" element={<Admin />} />
                 <Route path="/" element={<StrideLayout />}>
                     <Route index element={<Navigate to="/home" />} />
                     <Route path="/home" element={<Home key={isLoggedIn} />} /> 

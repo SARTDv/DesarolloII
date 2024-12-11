@@ -5,6 +5,8 @@ import styles from '../css/strideLogin.module.css';
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../components/AuthToken';
 import { toast, ToastContainer } from 'react-toastify';
+import { useLocation } from "react-router-dom";
+
 
 function Login() {
     const { isLoggedIn, setIsLoggedIn  } = useContext(AuthContext);
@@ -16,6 +18,13 @@ function Login() {
     const [captchaValue, setCaptchaValue] = useState(null);
     const navigate = useNavigate();
 
+    const location = useLocation();
+        useEffect(() => {
+            if (location.state && location.state.activeLink) {
+                setActiveLink(location.state.activeLink);
+            }
+        }, [location]);    
+
     useEffect(() => {
         if (isLoggedIn) {
             alert("Ya has iniciado sesión.");
@@ -26,6 +35,11 @@ function Login() {
     const handleCaptchaChange = (value) => {
         setCaptchaValue(value);
       };
+
+    const validatePassword = (password) => {
+        return password && password.length >= 8;
+    };
+    
     
     const handleRegister = async (e) => {
 
@@ -34,12 +48,19 @@ function Login() {
             toast.error('Please do Captcha!', { autoClose: true });
             return;
           }
-          const data = {
-            username,
-            password,
-            'g-recaptcha-response': captchaValue,
-            email,
-          };
+          if (validatePassword(password)){
+            const data = {
+                username,
+                password,
+                'g-recaptcha-response': captchaValue,
+                email,
+            };
+          }
+          else {
+            toast.error('Password must be at least 8 characters long', { autoClose: true });
+            return;
+          }
+            
 
         try {
             const response = await axios.post('http://localhost:8000/api/accounts/register/', data);
@@ -87,10 +108,7 @@ function Login() {
         }
     };
     
-
-    // Define el estado
-    const [activeLink, setActiveLink] = useState("signup");
-
+    const [activeLink, setActiveLink] = useState(location.state?.activeLink || 'signin');
     const [activeButton, setActiveButton] = useState("vacio");
     const ButtonSignIn = () => { setActiveButton("log"); }; 
     const ButtonSignUp = () => { setActiveButton("reg"); };

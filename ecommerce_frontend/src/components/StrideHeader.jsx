@@ -38,9 +38,9 @@ const StrideHeader = () => {
         </div>
         {/* Button Group */}
         {!isLoggedIn && (
-                <div className="amado-btn-group mt-15 mb-30">
-                <Link to={{ pathname: "/login", state: { activeLink: "signup" }}} className="btn amado-btn mb-15">Sign up</Link>
-                <Link to={{ pathname: "/login", state: { activeLink: "signin" }}} className="btn amado-btn active">Sign in</Link>
+              <div className="amado-btn-group mt-15 mb-30">
+                <Link to="/login"  state={{ activeLink: "signup" }} className="btn amado-btn mb-15">Sign up</Link>
+                <Link to="/login" state={{ activeLink: "signin" }} className="btn amado-btn active">Sign in</Link>                
               </div>
         )}        
         {/* Amado Nav */}

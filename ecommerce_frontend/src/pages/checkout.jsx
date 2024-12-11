@@ -4,6 +4,26 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 
 const Checkout = () => {
+  const prod = [
+    {
+      name: "Zapas nike",
+      Qty: 1,
+      price: 100,
+      
+    },
+    {
+      name: "maquina de guerra",
+      Qty: 1,
+      price: 120,
+      
+    },
+    {
+      name: "cordones",
+      Qty: 2,
+      price: 10,      
+    },
+  ];
+
     const [pendingOrder, setPendingOrder] = useState(null);     
     const [hasPendingOrders, setHasPendingOrders] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -129,18 +149,26 @@ const Checkout = () => {
                     <div className="col-12 col-lg-4">
                         <div className="cart-summary">
                             <h5>Cart Total</h5>
+                            <ul className="product-table">
+                                {prod.map((producto) => (
+                                  <li key={producto.id} style={{ display: "flex", justifyContent: "space-between" }}>
+                                    <span>{producto.Qty}x {producto.name}</span>
+                                    <span>${producto.Qty * producto.price}</span>
+                                  </li>
+                                ))}
+                            </ul>
                             <ul className="summary-table">
                                 <li><span>subtotal:</span> <span>${pendingOrder.total_price}</span></li>
                                 <li><span>delivery:</span> <span>Free</span></li>
                                 <li><span>total:</span> <span>${pendingOrder.total_price}</span></li>
                             </ul>
-                            <div className="cart-btn mt-100">
-                            <button 
-                                className="btn amado-btn w-100" 
-                                onClick={handlePayment}  // Aquí llamamos a handlePayment cuando se haga clic
-                            >
-                                Pay
-                            </button>
+                            <div className="cart-btn mt-50">
+                              <button 
+                                  className="btn amado-btn w-100" 
+                                  onClick={handlePayment}  // Aquí llamamos a handlePayment cuando se haga clic
+                              >
+                                  Pay
+                              </button>
                             </div>
                         </div>
                     </div>
