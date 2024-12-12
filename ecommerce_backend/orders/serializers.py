@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Order, OrderItem
+from .models import Order, OrderItem,ShipInfo
 from cartItem.models import CartItem
 
 class OrderSerializer(serializers.ModelSerializer):
@@ -75,6 +75,28 @@ class OrderStatusUpdateSerializer(serializers.ModelSerializer):
         model = Order
         fields = ['status']  # Solo el campo de estado se puede actualizar
 
-    
+class ShipInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ShipInfo
+        fields = ['first_name', 'last_name', 'address', 'town', 'zip_code', 'phone_num', 'com']
+
+class OrderItemSerializer(serializers.ModelSerializer):
+    product_name = serializers.CharField(source='product.name')  # Suponiendo que 'product' tiene un campo 'name'
+    product_price = serializers.DecimalField(source='product.price', max_digits=10, decimal_places=2)
+
+    class Meta:
+        model = OrderItem
+        fields = ['product_name', 'quantity', 'product_price']
+
+
+class AOrderSerializer(serializers.ModelSerializer):
+    order_items = OrderItemSerializer(many=True, read_only=True)
+    user = serializers.CharField(source='user.username')  
+    ship_info = ShipInfoSerializer(read_only=True)  
+
+    class Meta:
+        model = Order
+        fields = ['id', 'user', 'created_at', 'updated_at', 'status', 
+                  'total_price', 'order_items', 'ship_info']
 
 

@@ -83,7 +83,7 @@ class ProductDetailView(APIView):
 
 #view para que el admin pueda realizar las operaciones crud sobre la tabla de productos       
 class AdminProductView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAdminUser]
 
     def get(self, request, product_id=None):
         if product_id:

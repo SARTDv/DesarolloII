@@ -22,7 +22,7 @@ class Order(models.Model):
         default='pending'
     )
     total_price = models.FloatField(default=0)
-    ship_info = models.OneToOneField(ShipInfo, null=True, blank=True, on_delete=models.SET_NULL)  # Relación con ShipInfo
+    ship_info = models.OneToOneField(ShipInfo, null=True, blank=True, on_delete=models.SET_NULL)  
 
     
     def __str__(self):

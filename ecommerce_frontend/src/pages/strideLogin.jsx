@@ -95,17 +95,26 @@ function Login() {
             // Realiza la solicitud POST al backend para el login
             const response = await axios.post('http://localhost:8000/api/accounts/login/', data);
             const token = response.data.token;
-            
+        
             // Guarda el token en el almacenamiento local
             localStorage.setItem('token', token); 
             toast.success('¡Login exitoso!', { autoClose: true });
             setIsLoggedIn(true); // Cambia el estado de autenticación
             navigate("/home"); // Redirige al usuario al inicio
-    
+        
         } catch (error) {
-            toast.error('¡Usuario o contraseña incorrectos!', { autoClose: true });
+            // Verifica si el error tiene una respuesta del backend
+            if (error.response) {
+                const errorMessage = error.response.data.error || 'Error inesperado durante el login.';
+                toast.error(errorMessage, { autoClose: true });
+            } else {
+                // Si no hay una respuesta, muestra un mensaje genérico
+                toast.error('No se pudo conectar al servidor. Por favor, intenta más tarde.', { autoClose: true });
+            }
             console.error("Error en el login:", error);
         }
+        
+        
     };
     
     const [activeLink, setActiveLink] = useState(location.state?.activeLink || 'signin');
