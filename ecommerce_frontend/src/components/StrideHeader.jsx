@@ -21,7 +21,7 @@ const StrideHeader = () => {
           <img src="img/core-img/logo.png" alt="Logo" />
         </a>
         </div>
-          {/* Navbar Toggler CORREGIR*/}
+          {/* Navbar Toggler*/}
           <div className="amado-navbar-toggler" onClick={() => setOptions(!options)}>
           <span></span><span></span><span></span>
         </div>
