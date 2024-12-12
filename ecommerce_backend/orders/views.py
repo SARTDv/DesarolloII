@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import OrderSerializer,PendingOrderSerializer,OrderListSerializer,OrderStatusUpdateSerializer
-from .models import Order                                       #No se si esto es correcto 
+from .models import Order                                      
 from django.db import transaction 
 from shippinfo.models import ShipInfo
 from shippinfo.serializers import ShipInfoSerializer
@@ -101,7 +101,7 @@ class ProcessPaymentView(APIView):
 
 # lista las ordenes de un usuario con cierta id 
 class OrderListView(APIView):
-    permission_classes = [AllowAny]  #se debe cambiar 
+    permission_classes = [IsAuthenticated]  #se debe cambiar 
 
     def get(self, request):
         # Filtra las órdenes del usuario autenticado
@@ -109,10 +109,7 @@ class OrderListView(APIView):
         serializer = OrderListSerializer(orders, many=True)
         return Response(serializer.data)
     
-#
-
-
-
+#cambia el estatus de una orden
 class OrderUpdateStatusView(APIView):
     def patch(self, request, pk):
         try:

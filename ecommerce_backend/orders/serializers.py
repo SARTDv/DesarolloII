@@ -6,26 +6,20 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ['user', 'shippingaddress']
-
     def create(self, validated_data):
         user = validated_data['user']
-
         # Obtén todos los elementos del carrito para el usuario
         cart_items = CartItem.objects.filter(user=user)
         if not cart_items.exists():
             print(cart_items)
             raise serializers.ValidationError("No items in the cart to create an order.")
-            
-
         # Calcula el precio total
         total_price = sum(item.product.price * item.quantity for item in cart_items)
-
         # Crea la orden
         order = Order.objects.create(
             user=user,
             total_price=total_price
         )
-
         # Crea los OrderItem a partir de los CartItem
         for cart_item in cart_items:
             OrderItem.objects.create(
@@ -34,10 +28,8 @@ class OrderSerializer(serializers.ModelSerializer):
                 quantity=cart_item.quantity,
                 price = cart_item.product.price,
             )
-
         # Limpia el carrito
         cart_items.delete()
-
         return order
 
 
@@ -53,7 +45,6 @@ class OrderItemSerializer(serializers.ModelSerializer):
 # Serializer para la orden pendiente
 class PendingOrderSerializer(serializers.ModelSerializer):
     order_items = OrderItemSerializer(many=True)  # Incluir los elementos de la orden (productos)
-
     class Meta:
         model = Order
         fields = ['id', 'status', 'total_price', 'order_items']  # Incluir los order_items
