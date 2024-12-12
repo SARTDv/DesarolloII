@@ -164,3 +164,6 @@ EMAIL_HOST_PASSWORD = 'aihh jthp bcoc pmfk'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER  # Dirección de correo predeterminada (opcional)
 
 PASSWORD_RESET_TIMEOUT = 14400
+
+FRONTEND_URL = 'http://localhost:5173'
+

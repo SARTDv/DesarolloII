@@ -5,6 +5,8 @@ from django.shortcuts import render
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
+from .models import CustomUser
 from .serializers import UserSerializer
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
@@ -20,7 +22,7 @@ class RegisterView(APIView):
          
         captcha_response = request.data.get('g-recaptcha-response')
 
-        if not captcha_response:           # antes de captcha va un not lo quite para pruebas 
+        if not captcha_response:        
            return Response({'error': 'Captcha no completado'}, status=400)
         
         # Verifica el CAPTCHA con el servicio de Google
@@ -54,37 +56,50 @@ class LoginView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        # Obtén el valor del CAPTCHA de la solicitud
+        # Verificación de Captcha
         captcha_response = request.data.get('g-recaptcha-response')
-
-        if not captcha_response:  # Verifica si el CAPTCHA está presente
-            return Response({'error': 'Captcha no completado'}, status=status.HTTP_400_BAD_REQUEST)
-
-        # Verifica el CAPTCHA con el servicio de Google
-        captcha_secret = settings.RECAPTCHA_PRIVATE_KEY
-        payload = {
-            'secret': captcha_secret,
-            'response': captcha_response
-        }
-
-        # Hacer la solicitud POST al servidor de Google reCAPTCHA
-        captcha_verify_url = 'https://www.google.com/recaptcha/api/siteverify'
-        response = requests.post(captcha_verify_url, data=payload)
-        result = response.json()
-
-        # Si el CAPTCHA no es válido, devuelve un error
-        if not result.get('success'):
-            return Response({'error': 'Captcha inválido'}, status=status.HTTP_400_BAD_REQUEST)
-
-        # Si el CAPTCHA es válido, procedemos con la autenticación del usuario
+        if not captcha_response:
+            return Response({'error': 'Captcha no completado'}, status=400)
+        
+        # Validación de datos
         serializer = LoginSerializer(data=request.data)
         if serializer.is_valid():
             username = serializer.validated_data.get("username")
             password = serializer.validated_data.get("password")
+            
+            # Autenticación
             user = authenticate(username=username, password=password)
+            
+            # Verificación de email
             if user is not None:
+                if not user.is_email_verified:
+                    return Response({
+                        "error": "Por favor, verifica tu correo electrónico"
+                    }, status=403)
+                
+                # Generar token de autenticación
                 token, _ = Token.objects.get_or_create(user=user)
-                return Response({"token": token.key}, status=status.HTTP_200_OK)
-            return Response({"error": "Invalid credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+                return Response({"token": token.key}, status=200)
+            
+            return Response({"error": "Credenciales inválidas"}, status=401)
 
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=400)
+
+#view para la verificacion de email 
+
+class VerifyEmailView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        token = request.GET.get('token')
+        try:
+            user = CustomUser.objects.get(email_verification_token=token)
+            user.is_email_verified = True
+            user.save()
+            return Response({
+                'message': 'Email verificado exitosamente'
+            }, status=status.HTTP_200_OK)
+        except CustomUser.DoesNotExist:
+            return Response({
+                'error': 'Token de verificación inválido'
+            }, status=status.HTTP_400_BAD_REQUEST)

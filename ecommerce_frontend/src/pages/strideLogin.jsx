@@ -42,33 +42,31 @@ function Login() {
     
     
     const handleRegister = async (e) => {
-
         e.preventDefault();
+        
         if (!captchaValue) {
             toast.error('Please do Captcha!', { autoClose: true });
             return;
-          }
-          if (validatePassword(password)){
-            const data = {
-                username,
-                password,
-                'g-recaptcha-response': captchaValue,
-                email,
-            };
-          }
-          else {
+        }
+        
+        if (!validatePassword(password)) {
             toast.error('Password must be at least 8 characters long', { autoClose: true });
             return;
-          }
-            
-
+        }
+        
+        const data = {
+            username,
+            password,
+            'g-recaptcha-response': captchaValue,
+            email,
+        };
+    
         try {
-            console.log(data)
+            console.log(data);
             const response = await axios.post('http://localhost:8000/api/accounts/register/', data);
             setSuccess(true);
             console.log("Usuario registrado:", response.data);
             toast.success('Registered successfully! Please verify your email.', { autoClose: true });
-
         } catch (error) {
             setError("Hubo un error al registrar el usuario");
             toast.error('register issue!', { autoClose: true });

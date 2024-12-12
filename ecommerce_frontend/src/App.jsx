@@ -11,7 +11,7 @@ import Shop from './pages/shop';
 import ProductDetails from './pages/productDetails';
 import StrideLogin from './pages/strideLogin';
 import OrderPage from './pages/orders';
-import Verify from './pages/verify';
+import EmailVerification from './pages/EmailVerification';
 import TestOrderCreation from './pages/newtest';
 import { AuthProvider, AuthContext } from './components/AuthToken';
 import Admin from './pages/admin/admin'
@@ -46,7 +46,7 @@ const AppContent = () => {
                     <Route path="/shop" element={<Shop />} />
                     <Route path="/productDetails" element={<ProductDetails />} />
                     <Route path="/test-order" element={<TestOrderCreation />} />
-                    <Route path="/activate/:uidb64/:token" component={Verify} />
+                    <Route path="/verify-email" element={<EmailVerification />} />
 
                     <Route
                         path="/cart"
