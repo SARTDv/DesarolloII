@@ -10,7 +10,7 @@ export function ProductForm({ product, onSave, onCancel }) {
     category: '',
     price: 0,
     stock: 0,
-    imageUrl: ''
+    imageurl: ''
   };
 
   const [formData, setFormData] = useState(initialProduct);
@@ -97,10 +97,10 @@ export function ProductForm({ product, onSave, onCancel }) {
       <div className={styles["form-group"]}>
         <label className={styles["form-label"]}>Image URL</label>
         <input
-          type="url"
+          type="text"
           className={styles["form-input"]}
-          value={formData.imageUrl}
-          onChange={e => setFormData({ ...formData, imageUrl: e.target.value })}
+          value={formData.imageurl}
+          onChange={e => setFormData({ ...formData, imageurl: e.target.value })}
           required
         />
       </div>

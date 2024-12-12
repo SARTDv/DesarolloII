@@ -2,20 +2,6 @@ import React from 'react';
 import styles from '../../css/admin.module.css';
 
 export function ProductList({ products, onEdit, onDelete }) {
-  const ProductList = [
-    {
-      id: '11',
-      name: 'hola',
-      price: 100,
-      stock: 32,
-    },
-    {
-      id: '12',
-      name: 'zapas',
-      price: 500,
-      stock: 32,
-    }
-  ];
   return (
     <div className={styles["table-container"]}>
       <table className={styles["data-table"]}>
@@ -28,10 +14,13 @@ export function ProductList({ products, onEdit, onDelete }) {
           </tr>
         </thead>
         <tbody>
-          {ProductList.map(product => (
+          {products.map(product => (
             <tr key={product.id}>
               <td>{product.name}</td>
-              <td>${product.price.toFixed(2)}</td>
+              <td>
+                {/* Asegurarse de que price es un número válido */}
+                ${!isNaN(parseFloat(product.price)) ? parseFloat(product.price).toFixed(2) : 'N/A'}
+              </td>
               <td>{product.stock}</td>
               <td className={styles["action-buttons"]}>
                 <button

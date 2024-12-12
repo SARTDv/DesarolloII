@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { ProductForm } from './ProductForm';
 import { ProductList } from './ProductList';
 import styles from '../../css/admin.module.css';
@@ -8,25 +9,56 @@ export function ProductsManager() {
   const [showForm, setShowForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
 
+  useEffect(() => {
+    // Obtener productos al cargar el componente
+    axios.get('http://127.0.0.1:8000/api/products/admin/products/')
+      .then(response => {
+        setProducts(response.data);
+      })
+      .catch(error => {
+        console.error("There was an error fetching the products!", error);
+      });
+  }, []);
+
   const handleSaveProduct = (product) => {
     if (editingProduct) {
-      setProducts(products.map(p => 
-        p.id === product.id ? product : p
-      ));
+      // Actualizar el producto
+      axios.put(`http://127.0.0.1:8000/api/products/admin/products/${product.id}/`, product)
+        .then(response => {
+          setProducts(products.map(p => p.id === product.id ? response.data : p));
+          setShowForm(false);
+          setEditingProduct(null);
+        })
+        .catch(error => {
+          console.error("There was an error updating the product!", error);
+        });
     } else {
-      setProducts([...products, { ...product, id: Date.now().toString() }]);
+      // Crear un nuevo producto
+      axios.post('http://127.0.0.1:8000/api/products/admin/products/', product)
+        .then(response => {
+          setProducts([...products, response.data]);
+          setShowForm(false);
+        })
+        .catch(error => {
+          console.error("There was an error creating the product!", error);
+        });
     }
-    setShowForm(false);
-    setEditingProduct(null);
   };
 
   const handleEdit = (product) => {
     setEditingProduct(product);
+    console.log(product.imageurl)
     setShowForm(true);
   };
 
   const handleDelete = (productId) => {
-    setProducts(products.filter(p => p.id !== productId));
+    axios.delete(`http://127.0.0.1:8000/api/products/admin/products/${productId}/`)
+      .then(() => {
+        setProducts(products.filter(p => p.id !== productId));
+      })
+      .catch(error => {
+        console.error("There was an error deleting the product!", error);
+      });
   };
 
   return (
