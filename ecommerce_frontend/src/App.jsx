@@ -12,7 +12,6 @@ import ProductDetails from './pages/productDetails';
 import StrideLogin from './pages/strideLogin';
 import OrderPage from './pages/orders';
 import EmailVerification from './pages/EmailVerification';
-import TestOrderCreation from './pages/newtest';
 import { AuthProvider, AuthContext } from './components/AuthToken';
 import Admin from './pages/admin/admin'
 import AccountPage from './pages/account';
@@ -53,7 +52,6 @@ const AppContent = () => {
                     <Route path="/home" element={<Home key={isLoggedIn} />} /> 
                     <Route path="/shop" element={<Shop />} />
                     <Route path="/productDetails" element={<ProductDetails />} />
-                    <Route path="/test-order" element={<TestOrderCreation />} />
                     <Route path="/verify-email" element={<EmailVerification />} />
 
                     <Route

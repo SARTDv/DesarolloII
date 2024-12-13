@@ -66,7 +66,7 @@ class SearchView(APIView):
 
 #view para ver los detalles de un producto 
 class ProductDetailView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get(self, request, product_id):
         try:

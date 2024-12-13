@@ -96,7 +96,7 @@ const Shop = () => {
     const handleAddToCart = async (Id) => {
         const token = localStorage.getItem('token');
         if (!token) {
-            alert('Por favor, inicia sesión para añadir productos al carrito.');
+            toast.error('Please log in to add products to your cart', { autoClose: true });
             return;
         }
         try {
@@ -106,7 +106,7 @@ const Shop = () => {
             toast.success('Succesfully added!', { autoClose: true });
         } catch (error) {
             console.error('Error al añadir al carrito:', error);
-            alert('Hubo un error al añadir el producto al carrito');
+            toast.error('There is an issue with adding items to the cart.', { autoClose: true });
         }
     };
 

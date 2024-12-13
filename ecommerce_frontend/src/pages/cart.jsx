@@ -154,11 +154,6 @@ const Cart = () => {
                     </div>
                 </div>
             </div>
-            <div>
-            {/* Alertas de las mas alta calidddddaa */}
-            <ToastContainer position="top-center" autoClose={3000} hideProgressBar={true} />
-            </div>
-
         </div>
   );
 };

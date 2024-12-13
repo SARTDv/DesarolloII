@@ -88,7 +88,7 @@ const Checkout = () => {
     };
 
     checkPendingOrders();
-  }, [navigate]);
+  }, []);
 
   if (!hasPendingOrders || loading) {
     return null;

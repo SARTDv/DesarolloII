@@ -32,7 +32,7 @@ const ProductDetails = () => {
     const quantity = parseInt(quantityInput.value, 10);
 
     if (!token) {
-      alert('Por favor, inicia sesión para añadir productos al carrito.');
+      toast.error('Please log in to add products to your cart', { autoClose: true });
       return;
     }
 
