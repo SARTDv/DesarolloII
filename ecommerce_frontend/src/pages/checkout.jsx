@@ -44,14 +44,14 @@ const Checkout = () => {
     const isShippingValid = requiredShippingFields.every((field) => shipInfo[field].trim() !== "");
   
     if (!isPaymentValid) {
-      toast.error("Por favor, completa todos los campos de pago requeridos.");
+      toast.error("Please complete all required payment fields.");
       return;
     }
-  
+    
     if (!isShippingValid) {
-      toast.error("Por favor, completa todos los campos de envío requeridos.");
+      toast.error("Please complete all required shipping fields.");
       return;
-    }
+    }    
     
     try {
       const response = await axios.post(
@@ -59,9 +59,10 @@ const Checkout = () => {
         { ship_info: shipInfo }
       );
       toast.success(response.data.message);
+      navigate('/cart');
     } catch (error) {
       console.error("Error processing payment:", error.response || error.message);
-      toast.error("Error procesando el pago: " + (error.response?.data.error || error.message));
+      toast.error("Error processing payment: " + (error.response?.data.error || error.message));
     }
   };
   
@@ -75,7 +76,7 @@ const Checkout = () => {
         if (response.data.has_pending) {
           setPendingOrder(response.data.order); // Guarda la orden en el estado
         } else {
-          toast.info("No tienes órdenes pendientes, para pagar ");
+          toast.info("You have no pending orders to pay for.");
           navigate('/cart');
         }
       } catch (error) {
@@ -162,7 +163,6 @@ const Checkout = () => {
           </div>
         </div>
       </div>
-      <ToastContainer position="top-center" autoClose={3000} hideProgressBar={true} />
     </div>
   );
 };
