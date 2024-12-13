@@ -1,16 +1,9 @@
 import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from './AuthToken';
-import { PackageOpen } from 'lucide-react';
 
 const StrideHeader = () => {
-  const { isLoggedIn,handleLogout } = useContext(AuthContext);
-  const navigate = useNavigate();
-  const logoutAndRedirect = () => {
-    handleLogout();
-    navigate('/home'); // Navegación controlada dentro del árbol de Router
-  };
-  
+  const { isLoggedIn } = useContext(AuthContext);
   const [ options, setOptions ] = useState(false);
   
   return (
@@ -63,11 +56,8 @@ const StrideHeader = () => {
                     <a href="/MyOrders" className="Acc-nav">
                     <img src="img/core-img/package-open.png" alt="My Orders" /> My Orders
                     </a>
-                    <a href="#" className="fav-nav">
-                        <img src="img/core-img/favorites.png" alt="Favourite" /> Favourite
-                    </a>
-                    <a href="#" className="Acc-nav" onClick={logoutAndRedirect}>
-                        <img src="img/core-img/account.png" alt="Logout" /> Logout
+                    <a href="/myAccount" className="Acc-nav">
+                        <img src="img/core-img/account.png" alt="My Account" /> My Account
                     </a>
                 </>
           )}

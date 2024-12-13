@@ -27,7 +27,7 @@ function Login() {
 
     useEffect(() => {
         if (isLoggedIn) {
-            alert("Ya has iniciado sesión.");
+            toast.error('Already logged in', { autoClose: true });
             navigate("/home");
         }
     }, [isLoggedIn, navigate]);

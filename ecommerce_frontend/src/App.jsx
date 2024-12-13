@@ -15,6 +15,7 @@ import EmailVerification from './pages/EmailVerification';
 import TestOrderCreation from './pages/newtest';
 import { AuthProvider, AuthContext } from './components/AuthToken';
 import Admin from './pages/admin/admin'
+import AccountPage from './pages/account';
 import ProtectedRoute from './components/RutaLogeada'; // Importa el componente de rutas protegidas
 
 
@@ -39,7 +40,14 @@ const AppContent = () => {
         <Router>
             <Routes>
                 <Route path="/login" element={<StrideLogin />} />
-                <Route path="/admin" element={<Admin />} />
+                <Route
+                        path="/admin"
+                        element={
+                            <ProtectedRoute>
+                                <Admin />
+                            </ProtectedRoute>
+                        }
+                    />
                 <Route path="/" element={<StrideLayout />}>
                     <Route index element={<Navigate to="/home" />} />
                     <Route path="/home" element={<Home key={isLoggedIn} />} /> 
@@ -48,6 +56,14 @@ const AppContent = () => {
                     <Route path="/test-order" element={<TestOrderCreation />} />
                     <Route path="/verify-email" element={<EmailVerification />} />
 
+                    <Route
+                        path="/myAccount"
+                        element={
+                            <ProtectedRoute>
+                                <AccountPage />
+                            </ProtectedRoute>
+                        }
+                    />
                     <Route
                         path="/cart"
                         element={

@@ -31,7 +31,7 @@ export function UserOrders() {
 
   return (
     <div>
-      <h2>User Orders</h2>
+      <h2>Orders</h2>
       {error && <p className={styles.error}>{error}</p>}
       <div className={styles["table-container"]}>
         <table className={styles["data-table"]}>
@@ -54,7 +54,7 @@ export function UserOrders() {
                     <td>${order.total_price.toFixed(2)}</td>
                     <td>{new Date(order.created_at).toLocaleDateString()}</td>
                     <td>
-                      <button onClick={() => toggleDetails(order.id)}>
+                      <button className={`${styles.btn} ${styles["btn-primary"]}`} onClick={() => toggleDetails(order.id)}>
                         {expandedOrder === order.id ? 'Hide' : 'Show'}
                       </button>
                     </td>

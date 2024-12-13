@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 
 export const AuthContext = createContext();
 
@@ -12,12 +13,16 @@ export const AuthProvider = ({ children }) => {
 
     const handleLogout = () => {
         localStorage.removeItem('token');
-        setIsLoggedIn(false); // Actualiza el estado a "no logueado"
-        alert("Sesión cerrada correctamente");
+        setIsLoggedIn(false)
+        toast.success('Logged out successfully!', { autoClose: true });
     };
 
     return (
         <AuthContext.Provider value={{ isLoggedIn, handleLogout, setIsLoggedIn}}>
+            <div>
+                {/* Alertas de las mas alta calidddddaa */}
+                <ToastContainer position="top-center" autoClose={3000} hideProgressBar={true} />
+            </div>
             {children}
         </AuthContext.Provider>
     );

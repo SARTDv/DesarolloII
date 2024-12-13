@@ -123,10 +123,10 @@ const Shop = () => {
         "Ninguna",
         "tripleA",
         "tripleB",
-        "Depende",
-        "Home Deco",
-        "Dressings",
-        "Tables",
+        "Original",
+        "Edicion Especial",
+        "Premium",
+        "Eco-friendly",
     ];
 
 

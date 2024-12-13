@@ -7,7 +7,7 @@ import { Analytics } from './Analytics';
 import styles from '../../css/admin.module.css';
 
 export function AdminDashboard() {
-  const [activeSection, setActiveSection] = useState('dashboard');
+  const [activeSection, setActiveSection] = useState('analytics');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {

@@ -36,10 +36,27 @@ const Checkout = () => {
   };
 
   const handlePayment = async () => {
+    // Verificación de campos requeridos
+    const requiredPaymentFields = ["cardNumber", "expiryDate", "cvv"];
+    const requiredShippingFields = ["first_name", "last_name", "address", "zip_code"];
+  
+    const isPaymentValid = requiredPaymentFields.every((field) => paymentInfo[field].trim() !== "");
+    const isShippingValid = requiredShippingFields.every((field) => shipInfo[field].trim() !== "");
+  
+    if (!isPaymentValid) {
+      toast.error("Por favor, completa todos los campos de pago requeridos.");
+      return;
+    }
+  
+    if (!isShippingValid) {
+      toast.error("Por favor, completa todos los campos de envío requeridos.");
+      return;
+    }
+    
     try {
       const response = await axios.post(
         "http://127.0.0.1:8000/api/orders/process-payment/",
-        { ship_info: shipInfo } 
+        { ship_info: shipInfo }
       );
       toast.success(response.data.message);
     } catch (error) {
@@ -47,6 +64,7 @@ const Checkout = () => {
       toast.error("Error procesando el pago: " + (error.response?.data.error || error.message));
     }
   };
+  
 
   useEffect(() => {
     const checkPendingOrders = async () => {
