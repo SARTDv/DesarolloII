@@ -1,79 +1,93 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { LogOut, Settings, House } from 'lucide-react';
-import styles from '../css/account.module.css'
-import { AuthContext } from '../components/AuthToken';
+import { LogOut, Settings, House } from "lucide-react";
+import styles from "../css/account.module.css";
+import { AuthContext } from "../components/AuthToken";
+import axios from "axios";
 
 function AccountPage() {
-  const { isLoggedIn, handleLogout } = useContext(AuthContext);
+  const { handleLogout } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  const [userData, setUserData] = useState(null);
+  const [isSuperuser, setIsSuperuser] = useState(false);
+
   const logoutAndRedirect = () => {
     handleLogout();
-    navigate('/home');
+    navigate("/home");
   };
+
   const handleAdminClick = () => {
-    navigate('/admin');
-  };  
-
-  const [isSuperuser, setIsSuperuser] = useState(false);
-  //Cuando se hace la solicitud setIsSuperuser(response.data.isSuperuser);
-
-  const posibleRta = {
-    Username: "john Doe",
-    Email: "john.doe@example.com",
-    isAdmin: true,
-  }
+    navigate("/admin");
+  };
 
   useEffect(() => {
-    setIsSuperuser(posibleRta.isAdmin)
-    console.log("Se renderiza")
-  }, []); // Se ejecuta lo que sea que este dentro una vez se renderiza
+    // Realizar la solicitud al backend
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/api/accounts/user-detail/");
+        setUserData(response.data);
+        setIsSuperuser(response.data.is_staff); // Usar is_staff como indicador de superusuario
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        if (error.response && error.response.status === 401) {
+          handleLogout(); // Desloguear si el token es inválido
+          navigate("/login");
+        }
+      }
+    };
 
-  
+    fetchUserData();
+  }, [navigate, handleLogout]);
+
+  if (!userData) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className={styles["account-container"]}>
       <div className={styles["account-card"]}>
         <h1 className={styles["title"]}>My Account</h1>
-        
+
         <div className={styles["content"]}>
           <div className={styles["avatar-container"]}>
             <div className={styles["avatar"]}>
-              <span>{posibleRta.Username.charAt(0).toLocaleUpperCase()}</span>
+              <span>{userData.username.charAt(0).toUpperCase()}</span>
             </div>
           </div>
 
           <div className={styles["info-section"]}>
             <div className={styles["info-group"]}>
               <label>Username</label>
-              <div className={styles["info-box"]}>{posibleRta.Username}</div>
+              <div className={styles["info-box"]}>{userData.username}</div>
             </div>
 
             <div className={styles["info-group"]}>
               <label>Email</label>
-              <div className={styles["info-box"]}>{posibleRta.Email}</div>
+              <div className={styles["info-box"]}>{userData.email}</div>
             </div>
           </div>
-            <div className={styles["button-group"]}>
-                    {isSuperuser ? (
-                        <button
-                            onClick={handleAdminClick}
-                            className={`${styles["btn"]} ${styles["btn-primary"]}`}
-                        >
-                            <Settings size={20} />
-                            <span>Admin</span>
-                        </button>
 
-                        ) : (
-                        <button
-                        className={`${styles["btn"]} ${styles["btn-primary"]}`}
-                        onClick={() => {
-                            window.location.href = "/home";
-                        }}
-                        >
-                            <House size={20}/>
-                            <span>Home</span>
-                        </button>
-                )}
+          <div className={styles["button-group"]}>
+            {isSuperuser ? (
+              <button
+                onClick={handleAdminClick}
+                className={`${styles["btn"]} ${styles["btn-primary"]}`}
+              >
+                <Settings size={20} />
+                <span>Admin</span>
+              </button>
+            ) : (
+              <button
+                className={`${styles["btn"]} ${styles["btn-primary"]}`}
+                onClick={() => {
+                  window.location.href = "/home";
+                }}
+              >
+                <House size={20} />
+                <span>Home</span>
+              </button>
+            )}
             <button
               onClick={logoutAndRedirect}
               className={`${styles["btn"]} ${styles["btn-outline"]}`}

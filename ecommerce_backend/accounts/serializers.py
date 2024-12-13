@@ -75,3 +75,8 @@ def send_verification_email(user):
         [user.email],
         fail_silently=False,
     )
+
+class CustomUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'email', 'is_staff']

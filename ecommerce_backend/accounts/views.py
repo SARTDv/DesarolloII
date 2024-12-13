@@ -11,8 +11,8 @@ from .serializers import UserSerializer
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 from django.conf import settings
-from .serializers import LoginSerializer
-from rest_framework.permissions import AllowAny
+from .serializers import LoginSerializer,CustomUserSerializer
+from rest_framework.permissions import AllowAny,IsAuthenticated
 
 class RegisterView(APIView):
 
@@ -102,3 +102,11 @@ class VerifyEmailView(APIView):
             return Response({
                 'error': 'Token de verificación inválido'
             }, status=status.HTTP_400_BAD_REQUEST)
+
+class UserDetailView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user  
+        serializer = CustomUserSerializer(user)
+        return Response(serializer.data)
