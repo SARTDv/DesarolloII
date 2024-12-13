@@ -159,8 +159,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'  # Servidor SMTP de Gmail (puedes usar otro servidor de correo)
 EMAIL_PORT = 587  # Puerto de Gmail
 EMAIL_USE_TLS = True  # Usar TLS para una conexión segura
-EMAIL_HOST_USER = 'bayron.jojoa@correounivalle.edu.co'  # Dirección de correo electrónico de donde se enviarán los correos
-EMAIL_HOST_PASSWORD = 'aihh jthp bcoc pmfk'
+EMAIL_HOST_USER = 'strdccnts@gmail.com'  # Dirección de correo electrónico de donde se enviarán los correos
+EMAIL_HOST_PASSWORD = 'dxnw qlwm uuzr uuog'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER  # Dirección de correo predeterminada (opcional)
 
 PASSWORD_RESET_TIMEOUT = 14400
