@@ -1,12 +1,25 @@
-# Proyecto-DesarolloSoftware-I
-Estudiantes:
+# Proyecto-DesarolloSoftware-II
 
-Ricardo Erazo Muñoz-2242117.
+## instrucciones de ejcucion en local
 
-Alejandro Muñoz-2242951.
+### clonar el repositorio de git 
+```bash
+git clone https://github.com/BayronJDv/DesarolloII.git
+```
 
-Bayron Jojoa-2242917.
+### iniciar el backend 
+```bash 
+cd ecommerce_backend
+pip install -r rquirements.txt
+```
+```python
+python manage.py makemigrations
+python manage.py migrate 
+python manage.py runserver
+```
+### inicioar el front 
 
-Heidy Gelpud-2242550.
-
-Kevin Prado- 2242595.
+```bash 
+cd ecommerce_frontend
+npm i 
+npm run dev 
