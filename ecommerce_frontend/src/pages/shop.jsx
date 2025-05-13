@@ -13,7 +13,6 @@ const Shop = () => {
     const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-
     //Slider
     const MIN = 10;
     const MAX = 1000;

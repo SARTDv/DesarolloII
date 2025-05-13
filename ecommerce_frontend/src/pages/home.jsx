@@ -14,7 +14,7 @@ const Home = () => {
     { src: 'img/bg-img/4.jpg', alt: 'Test Image 4', price: '$180', title: 'Test Image 4' },
     { src: 'img/bg-img/7.jpg', alt: 'Test Image 7', price: '$318', title: 'Test Image 7' },
   ];
-
+  console.log('API URL:', import.meta.env.VITE_API_URL); // en Vite
   // Función para actualizar el número de columnas según el tamaño de la ventana
   const updateColumns = () => {
     const width = window.innerWidth;
