@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import api from '../api/axiosInstance';
 
 function EmailVerification() {
     // Estados para manejar el proceso de verificación

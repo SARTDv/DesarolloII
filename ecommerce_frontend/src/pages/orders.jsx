@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Package, CheckCircle, CircleX } from 'lucide-react';
-import axios from 'axios';
 import styles from '../css/orders.module.css'; // Importar el archivo CSS modular
+import api from '../api/axiosInstance';
 
 const OrderPage = () => {
   const [orders, setOrders] = useState([]);
