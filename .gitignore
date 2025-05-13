@@ -56,7 +56,9 @@ frontend/build
 
 # misc
 frontend/.DS_Store
+ecommerce_frontend/.env
 frontend/.env.local
+frontend/.env
 frontend/.env.development.local
 frontend/.env.test.local
 frontend/.env.production.local
@@ -65,4 +67,5 @@ frontend/npm-debug.log*
 frontend/yarn-debug.log*
 frontend/yarn-error.log*
 
-amado-master/
+**/.env*
+ecommerce_frontend/.env
