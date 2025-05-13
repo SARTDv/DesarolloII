@@ -39,6 +39,7 @@ const Shop = () => {
             const data = response.data;
             console.log("datos pro: ",data)
             setProducts(data.products);
+            console.log("datos productos: ",data.products)
             setTotalPages(data.total_pages);
             setCurrentPage(page);
         } catch (error) {
