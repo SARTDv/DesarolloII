@@ -48,11 +48,12 @@ const Shop = () => {
         }
     };   
 
-    
+    /*
     useEffect(() => {
         fetchProducts();
     }, []); 
-
+    */
+   
     // Función para manejar la búsqueda
     const handleSearch = async (palabra) => {
         setLoading(true);
@@ -63,7 +64,8 @@ const Shop = () => {
                     category: activeCategory,
                     keyword: palabra,
                     min_price: values[0],
-                    max_price: values[1]
+                    max_price: values[1],
+                    page: currentPage
                 },
                 });
 
@@ -93,7 +95,8 @@ const Shop = () => {
                     category: category,
                     keyword: keyword,
                     min_price: values[0],
-                    max_price: values[1]
+                    max_price: values[1],
+                    page: currentPage
                 },
                 });
             
