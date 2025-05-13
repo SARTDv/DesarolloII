@@ -19,9 +19,10 @@ const Shop = () => {
     const [values, setValues] = useState([MIN,MAX])
     
     // Función para obtener productos al cargar la página
-    const fetchProducts = async (page = 1) => {
+    useEffect(() => {
+    const fetchProducts = async () => {
         setLoading(true);
-        setError(null); // Resetea el estado de error antes de realizar la solicitud
+        setError(null);
         try {
             const response = await api.get('/api/products/search/', {
                 params: {
@@ -29,28 +30,24 @@ const Shop = () => {
                     keyword: keyword,
                     min_price: values[0],
                     max_price: values[1],
-                    page: page,
+                    page: currentPage,
                 },
-                });               
+            });
 
-            if (!response.ok) {
-                throw new Error("Error al obtener productos");
-            }
             const data = response.data;
             setProducts(data.products);
             setTotalPages(data.total_pages);
-            setCurrentPage(page);
         } catch (error) {
             setError(error.message);
             console.error("Error fetching products:", error);
         } finally {
             setLoading(false);
         }
-    };   
+    };
 
-    useEffect(() => {
-        fetchProducts();
-    }); 
+    fetchProducts();
+    }, [activeCategory, keyword, values, currentPage]);
+
 
 
     // Función para manejar la búsqueda
