@@ -34,6 +34,7 @@ const Shop = () => {
                 });               
 
             if (!response.ok) {
+                console.log("hay un error recibiendo response")
                 throw new Error("Error al obtener productos");
             }
             const data = response.data;
