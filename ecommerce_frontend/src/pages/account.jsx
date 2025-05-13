@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { LogOut, Settings, House } from "lucide-react";
 import styles from "../css/account.module.css";
 import { AuthContext } from "../components/AuthToken";
-import axios from "axios";
+import api from '../api/axiosInstance';
 
 function AccountPage() {
   const { handleLogout } = useContext(AuthContext);
@@ -25,7 +25,7 @@ function AccountPage() {
     // Realizar la solicitud al backend
     const fetchUserData = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/accounts/user-detail/");
+        const response = await api.get("/api/accounts/user-detail/");
         setUserData(response.data);
         setIsSuperuser(response.data.is_staff); // Usar is_staff como indicador de superusuario
       } catch (error) {

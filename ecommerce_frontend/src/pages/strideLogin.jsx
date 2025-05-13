@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
 import ReCAPTCHA from "react-google-recaptcha";
 import styles from '../css/strideLogin.module.css';
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../components/AuthToken';
 import { toast, ToastContainer } from 'react-toastify';
 import { useLocation } from "react-router-dom";
+import api from '../api/axiosInstance';
 
 
 function Login() {
@@ -63,7 +63,7 @@ function Login() {
     
         try {
             console.log(data);
-            const response = await axios.post('http://localhost:8000/api/accounts/register/', data);
+            const response = await api.post('/api/accounts/register/', data);
             setSuccess(true);
             console.log("Usuario registrado:", response.data);
             toast.success('Registered successfully! Please verify your email.', { autoClose: true });
@@ -93,7 +93,7 @@ function Login() {
     
         try {
             // Realiza la solicitud POST al backend para el login
-            const response = await axios.post('http://localhost:8000/api/accounts/login/', data);
+            const response = await api.post('/api/accounts/login/', data);
             const token = response.data.token;
         
             // Guarda el token en el almacenamiento local

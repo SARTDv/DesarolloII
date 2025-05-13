@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
+import api from '../api/axiosInstance';
 
 const Cart = () => {
     const navigate = useNavigate();
@@ -11,7 +11,7 @@ const Cart = () => {
             const token_key = localStorage.getItem('token');
 
             try {
-                const response = await axios.post('http://127.0.0.1:8000/api/cart/Showcart/', 
+                const response = await api.post('/api/cart/Showcart/', 
                     { token_key: token_key }
                 );
                 setCartItems(response.data);
@@ -26,7 +26,7 @@ const Cart = () => {
     const Remove = async (productId) => {
     
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/cart/Remove/', {
+            const response = await api.post('/api/cart/Remove/', {
                 product_id: productId,
             });
     
@@ -45,8 +45,8 @@ const Cart = () => {
     const handleCreateOrder = async () => {
         try {
             // Verificar si hay órdenes pendientes
-            const checkResponse = await axios.get(
-                "http://127.0.0.1:8000/api/orders/check-pending/"
+            const checkResponse = await api.get(
+                "/api/orders/check-pending/"
             );
     
             if (checkResponse.data.has_pending) {
@@ -55,8 +55,8 @@ const Cart = () => {
             }
     
             // Crear una nueva orden
-            const createResponse = await axios.post(
-                "http://127.0.0.1:8000/api/orders/create/"
+            const createResponse = await api.post(
+                "/api/orders/create/"
             );
     
             toast.success("Orden creada exitosamente: " + createResponse.data.message);

@@ -54,8 +54,8 @@ const Checkout = () => {
     }    
     
     try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/orders/process-payment/",
+      const response = await api.post(
+        "/api/orders/process-payment/",
         { ship_info: shipInfo }
       );
       toast.success(response.data.message);
@@ -70,7 +70,7 @@ const Checkout = () => {
   useEffect(() => {
     const checkPendingOrders = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/orders/check-pending/');
+        const response = await api.get('/api/orders/check-pending/');
         setHasPendingOrders(response.data.has_pending);
 
         if (response.data.has_pending) {

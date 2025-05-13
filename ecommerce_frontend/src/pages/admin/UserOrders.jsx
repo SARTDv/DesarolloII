@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styles from '../../css/admin.module.css';
+import api from '../../api/axiosInstance';
 
 export function UserOrders() {
   const [orders, setOrders] = useState([]);
@@ -10,7 +11,7 @@ export function UserOrders() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/orders/users_orders/', {
+        const response = await api.get('/api/orders/users_orders/', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}` // Token de autenticación
           }

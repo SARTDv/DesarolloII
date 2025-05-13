@@ -10,8 +10,8 @@ const ProductDetails = () => {
     const productId = localStorage.getItem('selectedProductId');
 
     if (productId) {
-      axios
-        .get(`http://localhost:8000/api/products/details/${productId}/`) // Cambia la URL según tu API
+      api
+        .get(`/api/products/details/${productId}/`) // Cambia la URL según tu API
         .then((response) => {
           setProduct(response.data);
           setLoading(false);
@@ -37,7 +37,7 @@ const ProductDetails = () => {
     }
 
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/cart/addToCart/', {
+      const response = await api.post('/api/cart/addToCart/', {
         token_key: token,
         product_id: focusp,
         quantity: quantity,

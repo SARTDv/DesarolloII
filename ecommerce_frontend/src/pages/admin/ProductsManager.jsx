@@ -3,6 +3,7 @@ import axios from 'axios';
 import { ProductForm } from './ProductForm';
 import { ProductList } from './ProductList';
 import styles from '../../css/admin.module.css';
+import api from '../../api/axiosInstance';
 
 export function ProductsManager() {
   const [products, setProducts] = useState([]);
@@ -11,7 +12,7 @@ export function ProductsManager() {
 
   useEffect(() => {
     // Obtener productos al cargar el componente
-    axios.get('http://127.0.0.1:8000/api/products/admin/products/')
+    api.get('/api/products/admin/products/')
       .then(response => {
         setProducts(response.data);
       })
@@ -23,7 +24,7 @@ export function ProductsManager() {
   const handleSaveProduct = (product) => {
     if (editingProduct) {
       // Actualizar el producto
-      axios.put(`http://127.0.0.1:8000/api/products/admin/products/${product.id}/`, product)
+      api.put(`/api/products/admin/products/${product.id}/`, product)
         .then(response => {
           setProducts(products.map(p => p.id === product.id ? response.data : p));
           setShowForm(false);
@@ -34,7 +35,7 @@ export function ProductsManager() {
         });
     } else {
       // Crear un nuevo producto
-      axios.post('http://127.0.0.1:8000/api/products/admin/products/', product)
+      api.post('/api/products/admin/products/', product)
         .then(response => {
           setProducts([...products, response.data]);
           setShowForm(false);
@@ -52,7 +53,7 @@ export function ProductsManager() {
   };
 
   const handleDelete = (productId) => {
-    axios.delete(`http://127.0.0.1:8000/api/products/admin/products/${productId}/`)
+    api.delete(`/api/products/admin/products/${productId}/`)
       .then(() => {
         setProducts(products.filter(p => p.id !== productId));
       })

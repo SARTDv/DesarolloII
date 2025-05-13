@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Slider from 'react-slider';
 import { toast, ToastContainer } from 'react-toastify';
+import api from '../api/axiosInstance';
 
 const Shop = () => {
     
@@ -24,13 +24,20 @@ const Shop = () => {
         setLoading(true);
         setError(null); // Resetea el estado de error antes de realizar la solicitud
         try {
-            const response = await fetch(
-                `http://127.0.0.1:8000/api/products/search/?category=${activeCategory}&keyword=${keyword}&min_price=${values[0]}&max_price=${values[1]}&page=${page}`
-            );
+            const response = await api.get('/api/products/search/', {
+                params: {
+                    category: activeCategory,
+                    keyword: keyword,
+                    min_price: values[0],
+                    max_price: values[1],
+                    page: page,
+                },
+                });               
+
             if (!response.ok) {
                 throw new Error("Error al obtener productos");
             }
-            const data = await response.json();
+            const data = response.data;
             setProducts(data.products);
             setTotalPages(data.total_pages);
             setCurrentPage(page);
@@ -52,13 +59,19 @@ const Shop = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await fetch(
-                `http://127.0.0.1:8000/api/products/search/?category=${activeCategory}&keyword=${palabra}&min_price=${values[0]}&max_price=${values[1]}`
-            );
+            const response = await api.get('/api/products/search/', {
+                params: {
+                    category: activeCategory,
+                    keyword: palabra,
+                    min_price: values[0],
+                    max_price: values[1]
+                },
+                });
+
             if (!response.ok) {
                 throw new Error("Error al realizar la búsqueda");
             }
-            const data = await response.json();
+            const data = response.data;
             setProducts(data.products);
             setTotalPages(data.total_pages); 
             setCurrentPage(1);
@@ -76,13 +89,19 @@ const Shop = () => {
         setLoading(true);
         setError(null);
         try {
-            const response = await fetch(
-                `http://127.0.0.1:8000/api/products/search/?category=${category}&keyword=${keyword}&min_price=${values[0]}&max_price=${values[1]}`
-            );
+            const response = await api.get('/api/products/search/', {
+                params: {
+                    category: category,
+                    keyword: keyword,
+                    min_price: values[0],
+                    max_price: values[1]
+                },
+                });
+            
             if (!response.ok) {
                 throw new Error("Error al realizar la búsqueda");
             }
-            const data = await response.json();
+            const data = response.data;
             setProducts(data.products);
             setTotalPages(data.total_pages);
             setCurrentPage(1);
@@ -100,9 +119,10 @@ const Shop = () => {
             return;
         }
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/cart/addToCart/', 
+            await api.post('/api/cart/addToCart/',
                 { token_key: token, product_id: Id }
             );
+
             toast.success('Succesfully added!', { autoClose: true });
         } catch (error) {
             console.error('Error al añadir al carrito:', error);

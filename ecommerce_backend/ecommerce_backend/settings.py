@@ -10,7 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
 from pathlib import Path
+import dj_database_url
+from dotenv import load_dotenv
+
+# Cargar variables desde .env solo en local
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +26,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-k6r)+s4i&%=#j9zkkj^)ox6q5v6ov5q_2j1&so6jdgc_czfcoz'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 
 
 # Application definition
@@ -85,10 +91,10 @@ WSGI_APPLICATION = 'ecommerce_backend.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default=os.environ.get("DATABASE_URL", f"sqlite:///{BASE_DIR / 'db.sqlite3'}"),
+        conn_max_age=600,
+    )
 }
 
 
@@ -134,12 +140,14 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOWED_ORIGINS = [
+    os.environ.get('FRONTEND_URL', 'http://localhost:5173'),
+]
 
-CORS_ALLOW_ALL_ORIGINS = True #REVISAR, responde de todos los origenes
 
-
-RECAPTCHA_PUBLIC_KEY = '6LduhHgqAAAAAG6SwTg1Beu_vrBcBnf1Opozllu8'
-RECAPTCHA_PRIVATE_KEY = '6LduhHgqAAAAAPbjNj9V-SzsbrGhJ-ym8kmg-kl-'
+RECAPTCHA_PUBLIC_KEY = os.environ.get('RECAPTCHA_PUBLIC_KEY')
+RECAPTCHA_PRIVATE_KEY = os.environ.get('RECAPTCHA_PRIVATE_KEY')
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -159,11 +167,11 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'  # Servidor SMTP de Gmail (puedes usar otro servidor de correo)
 EMAIL_PORT = 587  # Puerto de Gmail
 EMAIL_USE_TLS = True  # Usar TLS para una conexión segura
-EMAIL_HOST_USER = 'strdccnts@gmail.com'  # Dirección de correo electrónico de donde se enviarán los correos
-EMAIL_HOST_PASSWORD = 'dxnw qlwm uuzr uuog'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER') # Dirección de correo electrónico de donde se enviarán los correos
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER  # Dirección de correo predeterminada (opcional)
 
 PASSWORD_RESET_TIMEOUT = 14400
 
-FRONTEND_URL = 'http://localhost:5173'
+FRONTEND_URL = os.environ.get('FRONTEND_URL')
 
