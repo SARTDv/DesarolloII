@@ -44,7 +44,7 @@ const Shop = () => {
             setCurrentPage(page);
         } catch (error) {
             setError(error.message);
-            console.error("Error fetching products:", error);
+            console.error("Error fetching products:", error.message);
         } finally {
             setLoading(false);
         }
