@@ -48,12 +48,11 @@ const Shop = () => {
         }
     };   
 
-    /*
     useEffect(() => {
         fetchProducts();
-    }, []); 
-    */
-   
+    }); 
+
+
     // Función para manejar la búsqueda
     const handleSearch = async (palabra) => {
         setLoading(true);
