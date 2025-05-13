@@ -33,10 +33,10 @@ const Shop = () => {
                 },
                 });               
 
-            if (!response.ok) {
-                console.log("hay un error recibiendo response")
-                throw new Error("Error al obtener productos");
+            if (response.status !== 200) {
+                throw new Error(`Respuesta inesperada: ${response.status}`);
             }
+
             const data = response.data;
             console.log("datos pro: ",data)
             setProducts(data.products);
@@ -71,8 +71,8 @@ const Shop = () => {
                 },
                 });
 
-            if (!response.ok) {
-                throw new Error("Error al realizar la búsqueda");
+            if (response.status !== 200) {
+                throw new Error(`Respuesta inesperada: ${response.status}`);
             }
             const data = response.data;
             setProducts(data.products);
@@ -102,8 +102,8 @@ const Shop = () => {
                 },
                 });
             
-            if (!response.ok) {
-                throw new Error("Error al realizar la búsqueda");
+            if (response.status !== 200) {
+                throw new Error(`Respuesta inesperada: ${response.status}`);
             }
             const data = response.data;
             setProducts(data.products);
