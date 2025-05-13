@@ -4,7 +4,7 @@
 
 ### clonar el repositorio de git 
 ```bash
-git clone https://github.com/BayronJDv/DesarolloII.git](https://github.com/SARTDv/DesarolloII.git
+git clone https://github.com/SARTDv/DesarolloII.git
 ```
 
 ### iniciar el backend 
