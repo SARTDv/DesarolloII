@@ -3,6 +3,9 @@ name: Deploy Frontend and Backend
 on:
   push:
     branches: [main]  # o el nombre de tu rama principal
+    paths:
+      - 'ecommerce_backend/**'
+      - 'ecommerce_frontend/**'
       
 jobs:
   deploy-backend:
