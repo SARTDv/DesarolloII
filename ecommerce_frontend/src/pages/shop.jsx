@@ -37,6 +37,7 @@ const Shop = () => {
                 throw new Error("Error al obtener productos");
             }
             const data = response.data;
+            console.log("datos pro: ",data)
             setProducts(data.products);
             setTotalPages(data.total_pages);
             setCurrentPage(page);
