@@ -28,6 +28,8 @@ function AccountPage() {
         const response = await api.get("/api/accounts/user-detail/");
         setUserData(response.data);
         setIsSuperuser(response.data.is_staff); // Usar is_staff como indicador de superusuario
+        console.log("User data:", response.data);
+        console.log("Is superuser:", response.data.is_staff);
       } catch (error) {
         console.error("Error fetching user data:", error);
         if (error.response && error.response.status === 401) {

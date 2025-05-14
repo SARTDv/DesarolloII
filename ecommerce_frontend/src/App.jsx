@@ -18,19 +18,6 @@ import AccountPage from './pages/account';
 import ProtectedRoute from './components/RutaLogeada'; // Importa el componente de rutas protegidas
 
 
-// Interceptor para agregar el token en los encabezados de todas las solicitudes
-axios.interceptors.request.use(
-    (config) => {
-        const token = localStorage.getItem('token'); // Obtener el token del almacenamiento local
-        if (token) {
-            config.headers.Authorization = `Token ${token}`; // Agregar el token al encabezado de la solicitud
-        }
-        return config;
-    },
-    (error) => {
-        return Promise.reject(error);
-    }
-);
 
 const AppContent = () => {
     const { isLoggedIn } = useContext(AuthContext); 

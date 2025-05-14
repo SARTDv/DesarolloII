@@ -107,6 +107,9 @@ class UserDetailView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        user = request.user  
+        user = request.user
+        print(request.data)
         serializer = CustomUserSerializer(user)
+        print(serializer.data)
         return Response(serializer.data)
+    
