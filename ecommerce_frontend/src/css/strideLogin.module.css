@@ -10,7 +10,7 @@
     linear-gradient(
     rgba(246,247,249,0.5),
     rgba(246,247,249,0.7)),
-    url(img/bg-img/loginPh.png) no-repeat center center fixed; /*Fondo de la pagina*/
+    url(/img/bg-img/loginPh.png) no-repeat center center fixed; /*Fondo de la pagina*/
   background-size: cover;
 }
 
