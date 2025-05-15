@@ -25,6 +25,13 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0 #
+      
+      - name: Cargar variables de entorno desde GitHub Secret
+        run: |
+          echo "${{ secrets.TEST_ENV_VARS }}" > .env
+          set -o allexport
+          source .env
+          set +o allexport
 
       - name: Install Backend Dependencies
         run: |
@@ -38,7 +45,9 @@ jobs:
           coverage xml -o coverage-backend.xml
 
       - name: SonarCloud Scan Backend
-        uses: SonarSource/sonarcloud-github-action@master
+        uses: SonarSource/sonarqube-scan-action@v5
+        with:
+          projectBaseDir: ./ecommerce_backend
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_BACKEND_TOKEN }}
