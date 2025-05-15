@@ -24,15 +24,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 #
-      
-      - name: Cargar variables de entorno desde GitHub Secret
-        run: |
-          printf '%s' "${{ secrets.TEST_ENV_VARS }}" > .env
-          set -o allexport
-          source .env
-          set +o allexport
-        shell: bash
+          fetch-depth: 0
 
       - name: Install Backend Dependencies
         run: |
