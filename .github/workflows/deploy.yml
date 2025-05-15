@@ -20,6 +20,15 @@ jobs:
     defaults:
       run:
         working-directory: ./ecommerce_backend
+    env:
+      DEBUG: ${{ secrets.DEBUG }}
+      DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+      EMAIL_HOST_PASSWORD: ${{ secrets.EMAIL_HOST_PASSWORD }}
+      EMAIL_HOST_USER: ${{ secrets.EMAIL_HOST_USER }}
+      FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
+      RECAPTCHA_PRIVATE_KEY: ${{ secrets.RECAPTCHA_PRIVATE_KEY }}
+      RECAPTCHA_PUBLIC_KEY: ${{ secrets.RECAPTCHA_PUBLIC_KEY }}
+      
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
