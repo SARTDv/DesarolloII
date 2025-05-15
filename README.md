@@ -56,3 +56,4 @@ npm run dev
 ```
 
 no se veran productos o usuarios por que su base de datos estara vacia. si quiere probar las funcionalidades debe crear un superusuario en django entrar al panel de administradores del back y en los usuarios, darle check en la a casilla de email verificado del superusuario que creo asi ya podra entrar desde el front con esta cuenta y empezar a agregar produtos desde el panel admin que se encuentra en my account.
+
