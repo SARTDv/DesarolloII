@@ -28,10 +28,11 @@ jobs:
       
       - name: Cargar variables de entorno desde GitHub Secret
         run: |
-          echo "${{ secrets.TEST_ENV_VARS }}" > .env
+          printf '%s' "${{ secrets.TEST_ENV_VARS }}" > .env
           set -o allexport
           source .env
           set +o allexport
+        shell: bash
 
       - name: Install Backend Dependencies
         run: |
