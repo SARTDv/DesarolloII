@@ -69,3 +69,4 @@ frontend/yarn-error.log*
 
 **/.env*
 ecommerce_frontend/.env
+**/coverage/

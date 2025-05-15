@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Package, CheckCircle, CircleX } from 'lucide-react';
 import styles from '../css/orders.module.css'; // Importar el archivo CSS modular
 import api from '../api/axiosInstance';
+import { toast, ToastContainer } from 'react-toastify';
 
 const OrderPage = () => {
   const [orders, setOrders] = useState([]);
@@ -27,9 +28,10 @@ const OrderPage = () => {
   // Marcar como entregada
   const handleMarkAsDelivered = async (orderId) => {
     try {
-      const response = await api.patch(`/api/orders/orders/${orderId}/`, {
+      await api.patch(`/api/orders/orders/${orderId}/`, {
         status: 'completed',
       });
+      
       // Actualiza el estado local de la orden
       setOrders(
         orders.map((order) =>
@@ -37,13 +39,15 @@ const OrderPage = () => {
         )
       );
     } catch (err) {
-      setError(err.response ? err.response.data.detail : 'Failed to update order status');
+      const message = err.response ? err.response.data.detail : 'Failed to update order status';      
+      toast.error(message, { autoclose: true });
+      setError(message);
     }
   };
   
   const handleMarkAsCanceled = async (orderId) => {
     try {
-      const response = await api.patch(`/api/orders/orders/${orderId}/`, {
+      await api.patch(`/api/orders/orders/${orderId}/`, {
         status: 'cancelled',
       });
       // Actualiza el estado local de la orden
@@ -53,20 +57,26 @@ const OrderPage = () => {
         )
       );
     } catch (err) {
-      setError(err.response ? err.response.data.detail : 'Failed to update order status');
+      const message = err.response ? err.response.data.detail : 'Failed to update order status';
+      setError(message);
+      toast.error(message, { autoclose: true });
     }
   };
   if (loading) {
-    return <div>Loading orders...</div>;
+    return <div style={{ justifyContent: "center", alignItems: "center" }}>Loading orders...</div>;
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    toast.error("Error!",{autoclose:true});
+    return <div style={{ justifyContent: "center", alignItems: "center" }}>Error: {error}</div>;
   }
 
   return (
     <div className={styles["orders-container"]}>
       <div className={styles["orders-content"]}>
+        <div>
+            <ToastContainer position="top-center" autoClose={3000} hideProgressBar={true} />
+        </div>
         <div className={styles["orders-header"]}>
           <Package size={32} className={styles["orders-icon"]} />
           <h1 className={styles["orders-title"]}>My Orders</h1>
@@ -144,11 +154,7 @@ const OrderPage = () => {
             </div>
           ))}
         </div>
-      </div>
-
-
-
-      
+      </div>      
     </div>
   );
 };
