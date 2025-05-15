@@ -1,36 +1,58 @@
-from .test_setup import TestSetUp
-from ..models import User
+from .test_setup import AccountsTestSetup
+from unittest.mock import patch
 
-class TestViews(TestSetUp):
+class TestAccountsViews(AccountsTestSetup):
 
-    def test_user_cannot_register_with_no_data(self):
-        res = self.client.post(self.register_url)
-        self.assertEqual(res.status_code, 400)
+    @patch("accounts.views.requests.post")
+    def test_register_success(self, mock_post):
+        # Simula respuesta exitosa de Google reCAPTCHA
+        mock_post.return_value.json.return_value = {"success": True}
+        data = {
+            "username": "newuser",
+            "password": "newpassword123",
+            "email": "newuser@example.com",
+            "g-recaptcha-response": "dummy"
+        }
+        response = self.client.post(self.register_url, data)
+        self.assertEqual(response.status_code, 201)
+        self.assertIn("username", response.data)
 
-    
-    def test_user_can_register_correctly(self):
-        res = self.client.post(
-            self.register_url, self.user_data, format="json")
-        self.assertEqual(res.data['email'], self.user_data['email'])
-        self.assertEqual(res.data['username'], self.user_data['username'])
-        self.assertEqual(res.status_code, 201)
+    @patch("accounts.views.requests.post")
+    def test_register_fail_captcha(self, mock_post):
+        mock_post.return_value.json.return_value = {"success": False}
+        data = {
+            "username": "failuser",
+            "password": "failpassword123",
+            "email": "failuser@example.com",
+            "g-recaptcha-response": "dummy"
+        }
+        response = self.client.post(self.register_url, data)
+        self.assertEqual(response.status_code, 400)
+        self.assertIn("error", response.data)
 
+    @patch("accounts.views.requests.post")
+    def test_login_success(self, mock_post):
+        # Marca el usuario como verificado
+        self.user.is_email_verified = True
+        self.user.save()
+        mock_post.return_value.json.return_value = {"success": True}
+        data = {
+            "username": self.user.username,
+            "password": "testpassword123",
+            "g-recaptcha-response": "dummy"
+        }
+        response = self.client.post(self.login_url, data)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("token", response.data)
 
-
-    def test_user_cannot_login_with_unverified_email(self):
-        self.client.post(
-            self.register_url, self.user_data, format="json")
-        res = self.client.post(self.login_url,self.user_data, format="json")
-        self.assertEqual(res.status_code, 401)
-
-
-
-    def test_user_can_login_after_verification(self):
-        response=self.client.post(
-            self.register_url, self.user_data, format="json")
-        email = response.data['email']
-        user = User.objects.get(email=email)
-        user.is_verified = True
-        user.save()
-        res = self.client.post(self.login_url,self.user_data, format="json")
-        self.assertEqual(res.status_code, 200)
+    @patch("accounts.views.requests.post")
+    def test_login_fail_unverified_email(self, mock_post):
+        mock_post.return_value.json.return_value = {"success": True}
+        data = {
+            "username": self.user.username,
+            "password": "testpassword123",
+            "g-recaptcha-response": "dummy"
+        }
+        response = self.client.post(self.login_url, data)
+        self.assertEqual(response.status_code, 403)
+        self.assertIn("error", response.data)
