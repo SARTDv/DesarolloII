@@ -2,12 +2,17 @@ name: CI, SonarCloud Analysis and Deploy
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - dev
     paths:
       - 'ecommerce_backend/**'
       - 'ecommerce_frontend/**'
   pull_request:
-    branches: [main]
+    branches:
+      - main
+      - dev
+    types: [opened, synchronize, reopened]
     paths:
       - 'ecommerce_backend/**'
       - 'ecommerce_frontend/**'
