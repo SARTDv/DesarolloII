@@ -41,6 +41,9 @@ __pycache__/
 local_settings.py
 db.sqlite3
 media
+coverage/
+coverage-backend.xml
+coverage.xml
 
 # React
 # dependencies
@@ -69,3 +72,4 @@ frontend/yarn-error.log*
 
 **/.env*
 ecommerce_frontend/.env
+**/coverage/
