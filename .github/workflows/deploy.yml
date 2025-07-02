@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - green
+      - blue
     paths:
       - 'ecommerce_backend/**'
       - 'ecommerce_frontend/**'
