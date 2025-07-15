@@ -5,7 +5,7 @@ const Home = () => {
 
   const images = [
 
-    { src: 'img/bg-img/1.jpg', alt: 'pretty dirty boy ', price: '$180', title: 'viva colombia ' },
+    { src: 'img/bg-img/1.jpg', alt: 'pretty dirty boy ', price: '$180', title: 'imagen 6 ' },
     { src: 'img/bg-img/5.jpg', alt: 'Test Image 5', price: '$18', title: 'Test Image 5' },
     { src: 'img/bg-img/8.jpg', alt: 'Test Image 8', price: '$318', title: 'Test Image 8' },
     { src: 'img/bg-img/2.jpg', alt: 'Test Image 2', price: '$180', title: 'Test Image 2' },
